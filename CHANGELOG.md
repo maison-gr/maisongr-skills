@@ -13,6 +13,11 @@ What counts as breaking: renaming or removing a skill, subagent or principle, or
   - `maisongr-deploy`: confirmed approval, a rollback point recorded before the change, a backup before data changes, a cost estimate for paid services, and a check of the live system after every deploy.
   - `maisongr-open-source`: contributing to repositories you don't maintain. Reads CONTRIBUTING, the CLA or DCO and the project's AI policy before the first commit, and stops if AI-assisted contributions are refused. Claims the issue first, keeps one small proven pull request per problem, acts on review bots through the code without replying to them, and never chases maintainers.
 
+### Changed
+
+- Principle 6 now also keeps personal data out of logs, analytics events and error reports.
+- Principle 7 now asks the agent to state the cost before using a paid service or plan.
+
 ## [1.3.1] - 2026-11-06
 
 ### Changed
