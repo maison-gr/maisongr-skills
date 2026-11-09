@@ -17,7 +17,7 @@ What each platform supports, how Maison GR uses it, and the evidence behind each
 | Packaged install | Plugin marketplace | Not provided yet | No | No | Extension |
 | Verified by running it | Yes | No | No | No | No |
 
-"Verified by running it" means the installation was executed during development, not only read from documentation. Claude Code was tested with `claude plugin validate` and an install into an isolated configuration directory (version 2.1.314): 10 skills and 3 agents loaded. The other platforms' CLIs were not available on the development machine; their rows rely on official documentation.
+"Verified by running it" means the installation was executed during development, not only read from documentation. Claude Code was tested with `claude plugin validate` and an install into an isolated configuration directory: 10 skills and 3 agents loaded with version 2.1.314, and all 13 skills and 3 agents with version 2.1.319 on 9 November 2026. The other platforms' CLIs were not available on the development machine; their rows rely on official documentation.
 
 ## Claude Code
 

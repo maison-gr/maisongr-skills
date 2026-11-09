@@ -6,7 +6,7 @@ Yes, for the full effect. The principles in `AGENTS.md` are always loaded and se
 
 ## Will this make my agent slower or use more tokens?
 
-A little. `AGENTS.md` is about 6 KB of always-on context. Each skill adds about 100 tokens to every session for its name and description, and about 1,000 tokens when it is used. Measured on Claude Code, the plugin adds about 1,200 tokens to every session. The checks the principles require (running tests, reading the diff) take time. That is deliberate: they replace the time you would spend finding the problems yourself.
+A little. `AGENTS.md` is about 6 KB of always-on context. Each skill adds about 100 tokens to every session for its name and description, and about 1,000 tokens when it is used. Measured on Claude Code with the first ten skills, the plugin added about 1,200 tokens to every session; the three skills added since add about 300 more by the same per-skill figure. The checks the principles require (running tests, reading the diff) take time. That is deliberate: they replace the time you would spend finding the problems yourself.
 
 ## The agent asks too many questions.
 
