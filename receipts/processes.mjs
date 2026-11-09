@@ -54,13 +54,15 @@ export function startTime(pid) {
   return Number.isNaN(time) ? undefined : time;
 }
 
+// A stopped process can linger as a zombie on macOS and Linux until its parent collects it; it
+// no longer runs or listens, so it counts as stopped.
 const alive = (pid) => {
   try {
     process.kill(pid, 0);
-    return true;
   } catch (error) {
     return error.code === "EPERM";
   }
+  return windows || !run("ps", ["-o", "stat=", "-p", String(pid)]).trim().startsWith("Z");
 };
 
 // Stops a process and, on Windows, the processes it started. Never this process or its parent.
