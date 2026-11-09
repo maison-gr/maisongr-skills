@@ -72,15 +72,17 @@ export function checkClaims(message, runs) {
 // but it can make sure the agent owned the action in its report: if one ran and the report never
 // mentions it, the agent is sent back to disclose and justify it, or undo it. Once a report owns
 // an action it is not raised again; the same kind of action happening later is.
+// A flag is read only up to the end of its own command: `;`, `&` or `|` start the next one,
+// so `git commit -m x && sed -n 1p` is not a --no-verify.
 const GUARDRAILS = [
   {
     what: "force-pushed",
-    test: /\bgit\s+push\b[^\n]*(--force(-with-lease)?\b|\s-f\b)/i,
+    test: /\bgit\s+push\b[^\n;&|]*(--force(-with-lease)?\b|\s-f\b)/i,
     ack: /force[- ]?push|--force|-f\b/i,
   },
   {
     what: "skipped Git hooks with --no-verify",
-    test: /\bgit\s+(commit|push)\b[^\n]*(--no-verify\b|\s-n\b)/i,
+    test: /\bgit\s+(commit|push)\b[^\n;&|]*(--no-verify\b|\s-n\b)/i,
     ack: /no-verify|skip\w*\s+hook|hook\w*\s+skip/i,
   },
   {
@@ -90,7 +92,7 @@ const GUARDRAILS = [
   },
   {
     what: "rewrote history (amend / rebase / reset --hard)",
-    test: /\bgit\s+(commit[^\n]*--amend\b|rebase\b|reset[^\n]*--hard\b)/i,
+    test: /\bgit\s+(commit[^\n;&|]*--amend\b|rebase\b|reset[^\n;&|]*--hard\b)/i,
     ack: /amend|rebase|reset[^\n]*--hard/i,
   },
   {

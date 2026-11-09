@@ -21,6 +21,10 @@ What counts as breaking: renaming or removing a skill, subagent or principle, or
 - Principle 6 now also keeps personal data out of logs, analytics events and error reports.
 - Principle 7 now asks the agent to state the cost before using a paid service or plan.
 
+### Fixed
+
+- Receipts no longer reads a flag of the next chained command as a Git flag: `git commit -m x && sed -n 1p file` is not a `--no-verify`, `git push; ls -f` is not a force-push, and `git reset file | grep -- --hard` is not a history rewrite. A guarded flag on the Git command itself is still flagged.
+
 ## [1.3.1] - 2026-11-06
 
 ### Changed
