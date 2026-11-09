@@ -6,6 +6,10 @@ What counts as breaking: renaming or removing a skill, subagent or principle, or
 
 ## [Unreleased]
 
+### Added
+
+- Receipts catches servers left running. If the session started a dev server, watcher or tail (`next dev`, `vite`, `astro dev`, `wrangler dev`, `npm start`, `docker compose up` and similar) and no later command stopped it, the agent is sent back to stop it, or to list it under "Left running" with its address when the user asked to keep it. Lines under "Left running" are not read as verified claims.
+
 ### Changed
 
 - Principle 5 now asks the agent to leave the machine as it found it: stop every server, watcher and background process it started, delete its temporary files, and keep its footprint small (one dev server at a time, one-shot commands instead of watch mode). Forgotten servers pile up without a window, and on a laptop short of memory they freeze the machine.

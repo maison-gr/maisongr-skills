@@ -52,7 +52,7 @@ How this repository is organised, and why. Read this before adding a skill, a pl
 | `.claude-plugin/marketplace.json` | Lists this repository's root as the plugin | Claude Code |
 | `gemini-extension.json` | Gemini CLI extension manifest | Gemini CLI |
 | `package.json` | npm package; publishes only `cli/`, `skills/`, `agents/` and `AGENTS.md` | npm, npx |
-| `receipts/` | Claude Code hooks that record shell commands and check the report's "Verified" claims, plus guarded Git actions (force-push, `git add -A`, history rewrites, `--no-verify`, config changes) the report doesn't disclose. Declared in `plugin.json`, not in the default `hooks/hooks.json`, because Gemini CLI also loads that file from an extension and uses different event names | Claude Code plugin |
+| `receipts/` | Claude Code hooks that record shell commands and check the report's "Verified" claims, plus guarded Git actions (force-push, `git add -A`, history rewrites, `--no-verify`, config changes) the report doesn't disclose, and servers the session started and never stopped. Declared in `plugin.json`, not in the default `hooks/hooks.json`, because Gemini CLI also loads that file from an extension and uses different event names | Claude Code plugin |
 | `cli/maisongr-skills.mjs` | Installer behind `npx maisongr-skills`. Kept out of `bin/` because Claude Code adds a plugin's `bin/` to the shell `PATH` | Users of any agent |
 | `test/` | Installer tests, run with `npm test` | Contributors, CI |
 | `templates/` | Starting points for project instructions and plans | People |

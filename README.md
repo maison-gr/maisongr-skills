@@ -33,6 +33,7 @@ AI coding agents rarely fail for lack of knowledge. They fail because finishing 
 - build abstractions and options the task never needed;
 - "improve" files nobody mentioned;
 - report "all tests pass" without running them;
+- leave dev servers running in the background, where you never see them, until the laptop freezes;
 - push, drop a column or break a public API when nobody asked them to.
 
 And when your team uses three different agents, you get three different standards, or none.
@@ -63,6 +64,7 @@ An agent can write "Verified: `npm test` (42 passed)" without having run anythin
 - When the agent tries to finish, each command listed under **Verified** is checked against that record.
 - If a command never ran, or its last run failed while the report says it passed, the agent is sent back to run it and report the real result, or to move it to **Not verified**.
 - It also catches **guarded, irreversible actions the report doesn't own** — a force-push, `git add -A`, a history rewrite, a `--no-verify`, or a Git config change — and sends the agent back to disclose and justify them, or undo them.
+- It catches **servers left running**: a `next dev`, `vite`, `wrangler dev` or `npm start` the session started and never stopped.
 
 ```text
 Maison GR receipts: your report lists commands under "Verified" that this session's record does not support:
@@ -78,7 +80,15 @@ Maison GR receipts: this session took a guarded action without owning it in the 
 Each is allowed only if the user asked for it here. Say so and justify it in your report, or undo it.
 ```
 
-It checks only command names in backticks (and the guarded Git actions above), never blocks twice in a row, doesn't raise an action again once a report has owned it, and keeps its record on your machine, in Claude Code's plugin data folder. Receipts need the [Claude Code plugin](#install); other agents get the same report format without the check.
+And it catches **servers left behind** (see principle 5, _Verify before completion_). A dev server, watcher or tail has no window, so a forgotten one keeps running after the session, and a few of them freeze a laptop that is short of memory. If the session started one and no later command stopped it, the agent is sent back to stop it, or to list it under **Left running** with its address when you asked to keep it.
+
+```text
+Maison GR receipts: this session started a server that may still be running:
+- this session started `npm run dev` and nothing in the record stopped it.
+Stop it now. If the user asked to keep it, list it under "Left running" with its address and how to stop it.
+```
+
+It checks only command names in backticks (and the guarded Git actions and servers above), never blocks twice in a row, doesn't raise an action again once a report has owned it, and keeps its record on your machine, in Claude Code's plugin data folder. Receipts need the [Claude Code plugin](#install); other agents get the same report format without the check.
 
 ## How it works
 

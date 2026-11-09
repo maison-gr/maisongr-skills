@@ -162,6 +162,48 @@ test("does not read what follows a config read as its value", () => {
   assert.equal(s.stop(report("committed the fix")), null);
 });
 
+test("blocks a server the session started and never stopped", () => {
+  const s = session();
+  s.ran("cd web && npm run dev");
+  s.ran("npm test");
+  const result = s.stop(report("`npm test` (42 passed)"));
+  assert.equal(result.decision, "block");
+  assert.match(result.reason, /started `cd web && npm run dev`/);
+  assert.match(result.reason, /Left running/);
+});
+
+test("lets the agent stop once a later command stopped the server", () => {
+  for (const stop of ["kill %1", "npx vite --port 5173 & sleep 3; curl -s localhost:5173; kill $!", "npx kill-port 3000", "Stop-Process -Id 4242", "taskkill /PID 4242 /F", "pkill -f 'next start'"]) {
+    const s = session();
+    s.ran("npx next start -p 3100");
+    s.ran(stop);
+    assert.equal(s.stop(report("checked the page")), null, stop);
+  }
+});
+
+test("accepts a server the report lists as left running, and flags a new one later", () => {
+  const s = session();
+  s.ran("npx wrangler dev --port 8787");
+  assert.equal(s.stop(report("checked the worker\n**Left running:** wrangler dev on localhost:8787, as you asked")), null);
+  assert.equal(s.stop(report("next task done")), null);
+  s.ran("npx astro dev --port 4391");
+  assert.match(s.stop(report("next task done")).reason, /astro dev/);
+});
+
+test("does not read the Left running section as verified claims", () => {
+  const s = session();
+  s.ran("npm test");
+  s.ran("npm run dev");
+  const message = report("`npm test` (42 passed)\n**Left running:** `npm run dev` on localhost:3000, stop with `npx kill-port 3000`");
+  assert.equal(s.stop(message), null);
+});
+
+test("does not mistake builds, tests or config files for servers", () => {
+  const s = session();
+  for (const command of ["npm run build", "npx vite build", "npx vitest run", "cat vite.config.ts", "npm test", "next build", "npm run start:check"]) s.ran(command);
+  assert.equal(s.stop(report("checked the build")), null);
+});
+
 test("still flags a config write in a multi-line command", () => {
   const s = session();
   s.ran('cd repo\ngit config --global user.email "x@y.z"\ngit status');

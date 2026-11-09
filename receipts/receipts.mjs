@@ -21,7 +21,7 @@ const RUNNERS = new Set([
   "bash", "sh", "pwsh", "powershell", "curl",
 ]);
 
-const LABEL = /^[\s>*_#\-\d.)]*\**\s*(not verified|verified|changed|decisions)\s*\**\s*:?/i;
+const LABEL = /^[\s>*_#\-\d.)]*\**\s*(not verified|verified|changed|decisions|left running)\s*\**\s*:?/i;
 const ACKNOWLEDGED_FAILURE = /\b(fail(s|ed|ing|ure)?|exit(ed)? (with )?code|non-zero|broken)\b/i;
 
 export function verifiedSection(message) {
@@ -114,6 +114,31 @@ export function checkGuardrails(message, log) {
   return { problems, owned };
 }
 
+// Servers, watchers and tails the agent starts to check its work (see "Verify before completion").
+// They have no window, so a forgotten one keeps running unseen after the session, and enough of
+// them freeze a laptop. If the record has one with no later command that stops it, the agent is
+// sent back to stop it, or to list it under "Left running" when the user asked to keep it.
+// A stop command is not matched to a process: any stop after the start counts.
+const END = String.raw`(?=$|[\s;&|)])`;
+const SERVER = new RegExp(
+  String.raw`\b(?:next\s+(?:dev|start)|astro\s+(?:dev|preview)|nuxt\s+(?:dev|preview)|vite(?:\s+(?:dev|preview|serve)|(?=\s*(?:$|[;&|)]|--?\w)))|` +
+    String.raw`wrangler\s+(?:dev|tail)|(?:npm|pnpm|yarn|bun)\s+(?:run\s+)?(?:dev|start|serve|preview)|` +
+    String.raw`http\.server|uvicorn|flask\s+run|runserver|rails\s+s(?:erver)?|artisan\s+serve|docker\s+compose\s+up)${END}`,
+  "i",
+);
+const STOPPED = /\b(?:kill(?:all)?|pkill|taskkill|stop-process|docker\s+compose\s+(?:down|stop))\b/i;
+const LEFT_RUNNING = "left a server running";
+const LEFT_RUNNING_ACK = /left running|still running|(?:stopp?ed|killed)\b[^\n]*\b(?:server|process|watcher)|(?:server|process|watcher)s?\b[^\n]*\b(?:stopp?ed|killed)\b/i;
+
+export function checkLeftRunning(message, log) {
+  const since = log.slice(log.findLastIndex((entry) => entry.owned === LEFT_RUNNING) + 1);
+  const commands = since.map((entry) => entry.command ?? "");
+  const start = commands.findLastIndex((command) => SERVER.test(command));
+  if (start === -1 || commands.slice(start).some((command) => STOPPED.test(command))) return { problems: [], owned: [] };
+  if (LEFT_RUNNING_ACK.test(String(message ?? ""))) return { problems: [], owned: [LEFT_RUNNING] };
+  return { problems: [`this session started \`${normalise(commands[start])}\` and nothing in the record stopped it.`], owned: [] };
+}
+
 function logFile(sessionId) {
   const dir = join(process.env.CLAUDE_PLUGIN_DATA || tmpdir(), "receipts");
   mkdirSync(dir, { recursive: true });
@@ -141,11 +166,12 @@ function check(input) {
   const file = logFile(input.session_id);
   const log = readLog(file);
   const { problems: guardrails, owned } = checkGuardrails(message, log);
-  for (const what of owned) appendFileSync(file, `${JSON.stringify({ owned: what })}\n`);
+  const { problems: running, owned: ownedRunning } = checkLeftRunning(message, log);
+  for (const what of [...owned, ...ownedRunning]) appendFileSync(file, `${JSON.stringify({ owned: what })}\n`);
   // Block once at most: if the agent was already sent back, let it stop.
   if (input.stop_hook_active) return;
   const claims = checkClaims(message, log.filter((entry) => entry.command !== undefined));
-  if (claims.length === 0 && guardrails.length === 0) return;
+  if (claims.length === 0 && guardrails.length === 0 && running.length === 0) return;
   const parts = [];
   if (claims.length) {
     parts.push(
@@ -160,6 +186,14 @@ function check(input) {
       "Maison GR receipts: this session took a guarded action without owning it in the report:",
       ...guardrails.map((problem) => `- ${problem}`),
       "Each is allowed only if the user asked for it here. Say so and justify it in your report, or undo it.",
+    );
+  }
+  if (running.length) {
+    if (parts.length) parts.push("");
+    parts.push(
+      "Maison GR receipts: this session started a server that may still be running:",
+      ...running.map((problem) => `- ${problem}`),
+      "Stop it now. If the user asked to keep it, list it under \"Left running\" with its address and how to stop it.",
     );
   }
   process.stdout.write(JSON.stringify({ decision: "block", reason: parts.join("\n") }));
