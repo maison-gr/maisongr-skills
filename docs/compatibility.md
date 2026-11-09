@@ -31,6 +31,8 @@ What each platform supports, how Maison GR uses it, and the evidence behind each
 | Plugin `CLAUDE.md` | Not loaded as context; principles must be added to each project | `claude plugin validate` warning |
 | Skill frontmatter | `name`, `description` and optional fields; unknown fields are ignored; keep `SKILL.md` under 500 lines | [Skills](https://code.claude.com/docs/en/skills) |
 | Subagent frontmatter | `name` and `description` required; `model: inherit` supported | [Subagents](https://code.claude.com/docs/en/sub-agents) |
+| Receipts hooks | `PreToolUse` gives `tool_input.command` before a command runs; `Stop` gives `last_assistant_message` and `background_tasks` (shell tasks still running); `SessionStart` (also on resume, clear and compact) and `SessionEnd` exist. `SessionEnd` has a 1.5-second default budget, raised by a per-hook `timeout` in seconds, up to 60; this repo sets 30 | [Hooks reference](https://code.claude.com/docs/en/hooks), read 9 November 2026 |
+| Finding a server's process | On one Windows 11 machine, `netstat -ano` left a listening test server out of its table while `Get-NetTCPConnection` named its process, so Windows uses `Get-NetTCPConnection` first. macOS and Linux use `lsof`, then `ss`, and `ps` | Tested on Windows 11; macOS and Linux in CI |
 
 ## OpenAI Codex
 
