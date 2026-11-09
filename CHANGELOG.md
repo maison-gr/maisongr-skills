@@ -6,18 +6,11 @@ What counts as breaking: renaming or removing a skill, subagent or principle, or
 
 ## [Unreleased]
 
-### Added
-
-- Receipts catches servers left running. If the session started a dev server, watcher or tail (`next dev`, `vite`, `astro dev`, `wrangler dev`, `npm start`, `docker compose up` and similar) and no later command stopped it, the agent is sent back to stop it, or to list it under "Left running" with its address when the user asked to keep it. Lines under "Left running" are not read as verified claims.
-
-### Changed
-
-- Principle 5 now asks the agent to leave the machine as it found it: stop every server, watcher and background process it started, delete its temporary files, and keep its footprint small (one dev server at a time, one-shot commands instead of watch mode). Forgotten servers pile up without a window, and on a laptop short of memory they freeze the machine.
-- `maisongr-engineering` checks that no process it started is still running, and its report gains a "Left running" section for anything the developer asked to keep.
-
 ## [1.4.0] - 2026-11-09
 
 ### Added
+
+- Receipts catches servers left running. Each dev server, watcher or tail the session started (`next dev`, `vite`, `astro dev`, `wrangler dev`, `npm start`, `docker compose up` and similar) is checked before the agent stops: by connecting to its port on `localhost` when the port is known (a `--port` or `-p` flag, `PORT=`, or the tool's default), otherwise by looking for a later command that stopped it. Anything still running sends the agent back to stop it, or to list it under "Left running" with its address when the user asked to keep it. Lines under "Left running" are not read as verified claims.
 
 - Three skills, bringing the total to thirteen:
   - `maisongr-git`: focused commits staged by name, a secret check of the staged diff before every commit, no direct commits to branches that deploy, safe conflict resolution, `.gitattributes`, semver tags, and what to do when a secret was committed (rotate first).
@@ -29,10 +22,14 @@ What counts as breaking: renaming or removing a skill, subagent or principle, or
 
 - Principle 6 now also keeps personal data out of logs, analytics events and error reports.
 - Principle 7 now asks the agent to state the cost before using a paid service or plan.
+- Principle 5 now asks the agent to leave the machine as it found it: stop every server, watcher and background process it started, delete its temporary files, and keep its footprint small (one dev server at a time, one-shot commands instead of watch mode). Forgotten servers pile up without a window, and on a laptop short of memory they freeze the machine.
+- `maisongr-engineering` checks that no process it started is still running, and its report gains a "Left running" section for anything the developer asked to keep.
 
 ### Fixed
 
 - Receipts no longer reads a flag of the next chained command as a Git flag: `git commit -m x && sed -n 1p file` is not a `--no-verify`, `git push; ls -f` is not a force-push, and `git reset file | grep -- --hard` is not a history rewrite. A guarded flag on the Git command itself is still flagged.
+- Receipts ignores what is inside quotes when it looks for guarded Git flags: `git commit -m "a; b" --no-verify` is flagged, and `git commit -m "docs: explain --no-verify"` is not.
+- Receipts flags a force-push written as a `+refspec` (`git push origin +main`).
 
 ## [1.3.1] - 2026-11-06
 

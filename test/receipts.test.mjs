@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import { mkdtempSync } from "node:fs";
+import { createServer } from "node:net";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -34,6 +35,15 @@ function session() {
       return out ? JSON.parse(out) : null;
     },
   };
+}
+
+// A local port with something listening on it, standing in for a dev server.
+function listening() {
+  return new Promise((done) => {
+    const server = createServer().listen(0, "127.0.0.1", () =>
+      done({ port: server.address().port, close: () => new Promise((closed) => server.close(closed)) }),
+    );
+  });
 }
 
 const report = (verified) =>
@@ -167,6 +177,29 @@ test("still flags a guarded flag on a chained git command", () => {
   assert.match(s.stop(report("done")).reason, /--no-verify/);
 });
 
+test("reads past separators inside a quoted message", () => {
+  const s = session();
+  s.ran('git commit -m "fix: a; b" --no-verify');
+  assert.match(s.stop(report("done")).reason, /--no-verify/);
+  const t = session();
+  t.ran("git commit -m 'wip | tmp' --amend");
+  assert.match(t.stop(report("done")).reason, /rewrote history/);
+});
+
+test("does not read a quoted message as a git flag", () => {
+  const s = session();
+  s.ran('git commit -m "docs: explain --no-verify and --amend"');
+  s.ran("git commit -m 'chore: stop using git push --force'");
+  s.ran('git commit -m "$(cat <<\'EOF\'\nfix: x\n\nNever use --no-verify.\nEOF\n)"');
+  assert.equal(s.stop(report("committed the fix")), null);
+});
+
+test("flags a force-push written as a +refspec", () => {
+  const s = session();
+  s.ran("git push origin +main");
+  assert.match(s.stop(report("done")).reason, /force-pushed/);
+});
+
 test("does not read what follows a config read as its value", () => {
   const s = session();
   s.ran("git config --global user.name\ngit config --global user.email\ngh pr list");
@@ -186,22 +219,57 @@ test("blocks a server the session started and never stopped", () => {
   assert.match(result.reason, /Left running/);
 });
 
-test("lets the agent stop once a later command stopped the server", () => {
-  for (const stop of ["kill %1", "npx vite --port 5173 & sleep 3; curl -s localhost:5173; kill $!", "npx kill-port 3000", "Stop-Process -Id 4242", "taskkill /PID 4242 /F", "pkill -f 'next start'"]) {
+test("lets the agent stop once a later command stopped a server whose port is unknown", () => {
+  for (const stop of ["kill %1", "npx kill-port 3000", "Stop-Process -Id 4242", "taskkill /PID 4242 /F", "pkill -f 'npm run dev'"]) {
     const s = session();
-    s.ran("npx next start -p 3100");
+    s.ran("npm run dev");
     s.ran(stop);
     assert.equal(s.stop(report("checked the page")), null, stop);
   }
+  const s = session();
+  s.ran("npm run dev & sleep 3; curl -s localhost:3000; kill $!");
+  assert.equal(s.stop(report("checked the page")), null);
 });
 
 test("accepts a server the report lists as left running, and flags a new one later", () => {
   const s = session();
-  s.ran("npx wrangler dev --port 8787");
-  assert.equal(s.stop(report("checked the worker\n**Left running:** wrangler dev on localhost:8787, as you asked")), null);
+  s.ran("npx wrangler tail my-worker");
+  assert.equal(s.stop(report("checked the worker\n**Left running:** wrangler tail, as you asked")), null);
   assert.equal(s.stop(report("next task done")), null);
-  s.ran("npx astro dev --port 4391");
-  assert.match(s.stop(report("next task done")).reason, /astro dev/);
+  s.ran("npm run dev");
+  assert.match(s.stop(report("next task done")).reason, /npm run dev/);
+});
+
+test("lists every server still running, not only the last one", () => {
+  const s = session();
+  s.ran("npm run dev");
+  s.ran("npx wrangler tail my-worker");
+  const { reason } = s.stop(report("done"));
+  assert.match(reason, /npm run dev/);
+  assert.match(reason, /wrangler tail/);
+});
+
+test("blocks a server still listening on its port, whatever was run to stop it", async () => {
+  const server = await listening();
+  try {
+    const s = session();
+    s.ran(`npx next start -p ${server.port}`);
+    s.ran("kill 4242");
+    const result = s.stop(report("checked the page"));
+    assert.equal(result.decision, "block");
+    assert.match(result.reason, new RegExp(`still listening on localhost:${server.port}`));
+  } finally {
+    await server.close();
+  }
+});
+
+test("lets the agent stop when nothing listens on the server's port any more", async () => {
+  const server = await listening();
+  await server.close();
+  const s = session();
+  s.ran(`npx astro dev --port ${server.port}`);
+  s.ran(`PORT=${server.port} npm start`);
+  assert.equal(s.stop(report("checked the page")), null);
 });
 
 test("does not read the Left running section as verified claims", () => {

@@ -80,15 +80,15 @@ Maison GR receipts: this session took a guarded action without owning it in the 
 Each is allowed only if the user asked for it here. Say so and justify it in your report, or undo it.
 ```
 
-And it catches **servers left behind** (see principle 5, _Verify before completion_). A dev server, watcher or tail has no window, so a forgotten one keeps running after the session, and a few of them freeze a laptop that is short of memory. If the session started one and no later command stopped it, the agent is sent back to stop it, or to list it under **Left running** with its address when you asked to keep it.
+And it catches **servers left behind** (see principle 5, _Verify before completion_). A dev server, watcher or tail has no window, so a forgotten one keeps running after the session, and a few of them freeze a laptop that is short of memory. Before the agent finishes, each server the session started is checked. When its port is known (`--port`, `-p`, `PORT=` or the tool's default, such as 3000 for Next.js or 8787 for Wrangler), Receipts connects to that port on your machine: if something still answers, the server is still running. When the port is unknown (`npm run dev`, `wrangler tail`), it looks for a later command that stopped it. Anything still running sends the agent back to stop it, or to list it under **Left running** with its address when you asked to keep it.
 
 ```text
 Maison GR receipts: this session started a server that may still be running:
-- this session started `npm run dev` and nothing in the record stopped it.
+- this session started `npx next start -p 3100` and something is still listening on localhost:3100.
 Stop it now. If the user asked to keep it, list it under "Left running" with its address and how to stop it.
 ```
 
-It checks only command names in backticks (and the guarded Git actions and servers above), never blocks twice in a row, doesn't raise an action again once a report has owned it, and keeps its record on your machine, in Claude Code's plugin data folder. Receipts need the [Claude Code plugin](#install); other agents get the same report format without the check.
+It checks only command names in backticks (and the guarded Git actions and servers above), ignores what is inside a quoted commit message, never blocks twice in a row, doesn't raise an action again once a report has owned it, keeps its record on your machine, in Claude Code's plugin data folder, and connects only to `localhost`. Receipts need the [Claude Code plugin](#install); other agents get the same report format without the check.
 
 ## How it works
 
