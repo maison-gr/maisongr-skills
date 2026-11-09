@@ -190,7 +190,8 @@ export function startedServers(log) {
       const server = { index, command, port };
       if (port !== undefined && before) {
         server.ports = portRange(port).filter((p) => !before.taken.includes(p));
-        server.after = Date.parse(before.at);
+        // A process that started at or after this time can't have been running before the command.
+        server.after = before.clock ?? Date.parse(before.at) - 1000;
       }
       servers.push(server);
     }
@@ -271,7 +272,7 @@ async function agentListeners(log) {
     for (const pid of pids) {
       const started = startTime(pid);
       if (started === undefined) listening.add(port);
-      else if (started >= after.get(port) - 1000) {
+      else if (started >= after.get(port)) {
         listening.add(port);
         found.push({ port, pid, started });
       }
@@ -319,7 +320,11 @@ async function before(input) {
   const list = [...ports];
   const open = await Promise.all(list.map((port) => answers(port)));
   const taken = list.filter((_, i) => open[i]);
-  appendFileSync(logFile(input.session_id), `${JSON.stringify({ before: { command, at: new Date().toISOString(), taken } })}\n`);
+  // This hook's own start time, read the way a server's will be: on Linux a process start time
+  // comes from the boot time and can sit seconds away from the wall clock, so a server's start
+  // is compared with this rather than with the time now.
+  const clock = startTime(process.pid);
+  appendFileSync(logFile(input.session_id), `${JSON.stringify({ before: { command, at: new Date().toISOString(), clock, taken } })}\n`);
 }
 
 const sameServer = (a, b) => a.pid === b.pid && a.started === b.started;
