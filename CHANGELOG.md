@@ -6,6 +6,11 @@ What counts as breaking: renaming or removing a skill, subagent or principle, or
 
 ## [Unreleased]
 
+### Changed
+
+- Principle 5 now asks the agent to leave the machine as it found it: stop every server, watcher and background process it started, delete its temporary files, and keep its footprint small (one dev server at a time, one-shot commands instead of watch mode). Forgotten servers pile up without a window, and on a laptop short of memory they freeze the machine.
+- `maisongr-engineering` checks that no process it started is still running, and its report gains a "Left running" section for anything the developer asked to keep.
+
 ## [1.4.0] - 2026-11-09
 
 ### Added

@@ -52,6 +52,8 @@ Turn the request into success criteria you can observe, before writing code.
 - For a bug fix, show the failure before the fix and its absence after.
 - When tests do not cover the changed behaviour, exercise it directly.
 - Re-read the full diff before declaring the task done. Look for debug output, leftover TODOs and unrelated edits.
+- Leave the machine as you found it. Stop every server, watcher and background process you started, and delete the temporary files and folders you created. If one must keep running, say so in the report with its address and how to stop it.
+- Keep the footprint small: one dev server at a time, one-shot commands (`test`, `build`) instead of watch mode unless asked, and no parallel heavy jobs on a machine that is already short of memory.
 - Report what you ran and what happened. Never claim a check passed if it did not run. Name what you could not verify and why.
 
 ## 6. Secure by default

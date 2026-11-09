@@ -71,6 +71,7 @@ Share the plan and wait for agreement when the change is large, risky, touches a
 - Run the checks named in the plan, then the project's broader test and lint commands if the change could affect other areas.
 - For behaviour that tests do not cover, exercise it directly: run the command, call the endpoint, load the page.
 - Read the complete diff. Remove debug output, commented-out code, stray files and unrelated edits.
+- Stop the servers, watchers and background processes you started, and delete the temporary files you created. Check that none is still running.
 - Confirm every "done when" criterion against real evidence.
 
 ### 6. Report
@@ -84,6 +85,8 @@ Not verified:
   - <item>: <reason>
 Decisions to review:
   - <assumption or trade-off>
+Left running (only if asked to keep one):
+  - <process>: <address>, stop with <command>
 Noticed, not changed:
   - <unrelated issue>
 ```
@@ -101,6 +104,7 @@ Noticed, not changed:
 - [ ] Every changed line traces to the request.
 - [ ] The project's own test, lint and type commands were run, or the report says why not.
 - [ ] The full diff was reviewed.
+- [ ] Every process started during the task is stopped, or listed under "Left running".
 - [ ] The report separates what was verified from what was not.
 
 ## Stop and ask when

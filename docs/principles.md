@@ -62,6 +62,8 @@ This is the most important principle, because it is the one that catches failure
 
 **In practice:** the agent runs the project's own checks, reproduces a bug before and after the fix, reads the full diff, and reports exactly what it ran and what happened. It names what it could not verify.
 
+**Leave the machine as you found it.** Verifying often means starting things: a dev server, a preview build, a file watcher, an in-memory database, a headless browser. An agent that forgets them leaves them running after the session ends, and the developer never sees them, because they have no window. They add up: on one 12 GB laptop, 21 servers left behind by earlier sessions over four days took the free memory down to about 1 GB and pushed the page file to 14 GB, and the machine froze. So the agent stops what it started, deletes the temporary files it created, and runs one server at a time with one-shot commands rather than watch mode. A weak machine stays usable, and a fast one stays fast.
+
 **The line:** the requirement is honesty, not perfection. "I could not run the integration tests because they need a database I cannot reach" is a good report. "All tests pass," when they were not run, is the worst possible one.
 
 ## 6. Secure by default
