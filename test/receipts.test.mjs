@@ -1,17 +1,16 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { spawnSync } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { mkdtempSync } from "node:fs";
-import { createServer } from "node:net";
+import { connect, createServer } from "node:net";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const script = fileURLToPath(new URL("../receipts/receipts.mjs", import.meta.url));
 
-function session() {
-  const data = mkdtempSync(join(tmpdir(), "maisongr-receipts-"));
-  const id = "test-session";
+// A session's hooks. Sessions sharing `data` see each other's records, as on one machine.
+function session(data = mkdtempSync(join(tmpdir(), "maisongr-receipts-")), id = "test-session") {
   const hook = (mode, input) => {
     const result = spawnSync(process.execPath, [script, mode], {
       input: JSON.stringify({ session_id: id, ...input }),
@@ -22,7 +21,12 @@ function session() {
     return result.stdout;
   };
   return {
+    data,
+    // Claude Code calls "before" just before a command runs, and "record" once it has run.
+    before: (command) => hook("before", { hook_event_name: "PreToolUse", tool_name: "Bash", tool_input: { command } }),
     ran: (command) => hook("record", { hook_event_name: "PostToolUse", tool_name: "Bash", tool_input: { command } }),
+    end: () => hook("end", { hook_event_name: "SessionEnd", reason: "prompt_input_exit" }),
+    start: () => hook("start", { hook_event_name: "SessionStart", source: "startup" }),
     failed: (command, code) =>
       hook("record", {
         hook_event_name: "PostToolUseFailure",
@@ -38,12 +42,51 @@ function session() {
 }
 
 // A local port with something listening on it, standing in for a dev server.
-function listening() {
+function listening(port = 0) {
   return new Promise((done) => {
-    const server = createServer().listen(0, "127.0.0.1", () =>
+    const server = createServer().listen(port, "127.0.0.1", () =>
       done({ port: server.address().port, close: () => new Promise((closed) => server.close(closed)) }),
     );
   });
+}
+
+const answers = (port) =>
+  new Promise((done) => {
+    const socket = connect({ port, host: "127.0.0.1" });
+    socket.once("connect", () => {
+      socket.destroy();
+      done(true);
+    });
+    socket.once("error", () => done(false));
+  });
+
+const sleep = (ms) => new Promise((done) => setTimeout(done, ms));
+
+// A free port whose next ten ports are free too, so a test controls everything on them.
+async function freePort() {
+  for (;;) {
+    const { port, close } = await listening();
+    await close();
+    const range = Array.from({ length: 11 }, (_, i) => port + i);
+    if (port + 10 <= 65535 && !(await Promise.all(range.map(answers))).some(Boolean)) return port;
+  }
+}
+
+// A dev server in its own process, as an agent would start one.
+async function serverProcess(port) {
+  const child = spawn(process.execPath, ["-e", `require("net").createServer().listen(${port}, "127.0.0.1"); setInterval(() => {}, 1e9)`], {
+    stdio: "ignore",
+  });
+  const exited = new Promise((done) => child.once("exit", () => done(true)));
+  for (let i = 0; i < 100 && !(await answers(port)); i++) await sleep(50);
+  return {
+    pid: child.pid,
+    exited: () => Promise.race([exited, sleep(3000).then(() => false)]),
+    close: async () => {
+      child.kill();
+      await Promise.race([exited, sleep(3000)]);
+    },
+  };
 }
 
 const report = (verified) =>
@@ -250,16 +293,176 @@ test("lists every server still running, not only the last one", () => {
 });
 
 test("blocks a server still listening on its port, whatever was run to stop it", async () => {
-  const server = await listening();
+  const port = await freePort();
+  const s = session();
+  const command = `npx next start -p ${port}`;
+  s.before(command);
+  const server = await serverProcess(port);
   try {
-    const s = session();
-    s.ran(`npx next start -p ${server.port}`);
+    s.ran(command);
     s.ran("kill 4242");
     const result = s.stop(report("checked the page"));
     assert.equal(result.decision, "block");
-    assert.match(result.reason, new RegExp(`still listening on localhost:${server.port}`));
+    assert.match(result.reason, new RegExp(`still listening on localhost:${port}\\b`));
   } finally {
     await server.close();
+  }
+});
+
+test("never blames the agent for a port that was taken before its command ran", async () => {
+  const mine = await listening();
+  try {
+    const s = session();
+    const command = `npx next dev -p ${mine.port}`;
+    s.before(command);
+    s.ran(command);
+    assert.equal(s.stop(report("checked the page")), null);
+    s.end();
+    assert.equal(await answers(mine.port), true);
+  } finally {
+    await mine.close();
+  }
+});
+
+test("finds the agent's server on the next port when its own port was taken", async () => {
+  const port = await freePort();
+  const mine = await listening(port);
+  const s = session();
+  const command = `npx vite --port ${port}`;
+  s.before(command);
+  const moved = await serverProcess(port + 1);
+  try {
+    s.ran(command);
+    const { reason } = s.stop(report("checked the page"));
+    assert.match(reason, new RegExp(`still listening on localhost:${port + 1}\\b`));
+    assert.doesNotMatch(reason, new RegExp(`localhost:${port}\\b`));
+  } finally {
+    await moved.close();
+    await mine.close();
+  }
+});
+
+test("does not take 'stopped' for an answer while the server still listens", async () => {
+  const port = await freePort();
+  const s = session();
+  const command = `npx next start -p ${port}`;
+  s.before(command);
+  const server = await serverProcess(port);
+  try {
+    s.ran(command);
+    assert.equal(s.stop(report("checked the page. I stopped the dev server.")).decision, "block");
+    assert.equal(s.stop(report(`checked the page\n**Left running:** next start on localhost:${port}, as you asked`)), null);
+  } finally {
+    await server.close();
+  }
+});
+
+test("uses Claude Code's list of background tasks for a server whose port is unknown", () => {
+  const s = session();
+  s.ran("npm run dev");
+  const running = { background_tasks: [{ type: "shell", command: "npm run dev" }] };
+  assert.match(s.stop(report("checked the page"), running).reason, /in the background and it is still running/);
+  assert.equal(s.stop(report("checked the page. I stopped the server."), running).decision, "block");
+  assert.equal(s.stop(report("checked the page"), { background_tasks: [] }), null);
+});
+
+test("still checks a detached server the background list can't see", () => {
+  const s = session();
+  s.ran("npm run dev > dev.log 2>&1");
+  assert.equal(s.stop(report("checked the page"), { background_tasks: [] }), null);
+  const t = session();
+  t.ran("nohup npm run dev > dev.log 2>&1 &");
+  assert.match(t.stop(report("checked the page"), { background_tasks: [] }).reason, /nothing in the record stopped it/);
+});
+
+test("stops the agent's server when the session ends", async () => {
+  const port = await freePort();
+  const s = session();
+  const command = `npx astro dev --port ${port}`;
+  s.before(command);
+  const server = await serverProcess(port);
+  try {
+    s.ran(command);
+    assert.equal(s.stop(report("checked the page")).decision, "block");
+    s.end();
+    assert.equal(await server.exited(), true);
+    assert.equal(await answers(port), false);
+  } finally {
+    await server.close();
+  }
+});
+
+test("keeps a server left running on purpose, and says so in the next session", async () => {
+  const port = await freePort();
+  const s = session();
+  const command = `npx next dev -p ${port}`;
+  s.before(command);
+  const server = await serverProcess(port);
+  try {
+    s.ran(command);
+    assert.equal(s.stop(report(`checked the page\n**Left running:** next dev on localhost:${port}, as you asked`)), null);
+    s.end();
+    assert.equal(await answers(port), true);
+    const notice = session(s.data, "next-session").start();
+    assert.match(notice, /left running on purpose/);
+    assert.match(notice, new RegExp(`localhost:${port}\\b`));
+    assert.equal(await answers(port), true);
+  } finally {
+    await server.close();
+  }
+});
+
+test("stops what a session that never ended cleanly left behind, when the next one starts", async () => {
+  const port = await freePort();
+  const s = session();
+  const command = `npx wrangler dev --port ${port}`;
+  s.before(command);
+  const server = await serverProcess(port);
+  try {
+    s.ran(command);
+    s.stop(report("checked the worker"));
+    const notice = session(s.data, "next-session").start();
+    assert.match(notice, /stopped servers that earlier sessions left running/);
+    assert.equal(await server.exited(), true);
+    assert.equal(await answers(port), false);
+    assert.equal(session(s.data, "third-session").start(), "");
+  } finally {
+    await server.close();
+  }
+});
+
+test("leaves the current session's servers alone when it resumes or compacts", async () => {
+  const port = await freePort();
+  const s = session();
+  const command = `npx next dev -p ${port}`;
+  s.before(command);
+  const server = await serverProcess(port);
+  try {
+    s.ran(command);
+    s.stop(report("checked the page"));
+    assert.equal(s.start(), "");
+    assert.equal(await answers(port), true);
+  } finally {
+    await server.close();
+  }
+});
+
+test("never stops a process that reused the port after the agent's server ended", async () => {
+  const port = await freePort();
+  const s = session();
+  const command = `npx next dev -p ${port}`;
+  s.before(command);
+  const first = await serverProcess(port);
+  s.ran(command);
+  s.stop(report("checked the page"));
+  await first.close();
+  const reused = await serverProcess(port);
+  try {
+    assert.equal(session(s.data, "next-session").start(), "");
+    s.end();
+    assert.equal(await answers(port), true);
+  } finally {
+    await reused.close();
   }
 });
 

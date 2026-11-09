@@ -64,7 +64,7 @@ An agent can write "Verified: `npm test` (42 passed)" without having run anythin
 - When the agent tries to finish, each command listed under **Verified** is checked against that record.
 - If a command never ran, or its last run failed while the report says it passed, the agent is sent back to run it and report the real result, or to move it to **Not verified**.
 - It also catches **guarded, irreversible actions the report doesn't own** — a force-push, `git add -A`, a history rewrite, a `--no-verify`, or a Git config change — and sends the agent back to disclose and justify them, or undo them.
-- It catches **servers left running**: a `next dev`, `vite`, `wrangler dev` or `npm start` the session started and never stopped.
+- It catches **servers left running**: a `next dev`, `vite`, `wrangler dev` or `npm start` the session started and never stopped, and it stops them itself when the session ends.
 
 ```text
 Maison GR receipts: your report lists commands under "Verified" that this session's record does not support:
@@ -80,15 +80,20 @@ Maison GR receipts: this session took a guarded action without owning it in the 
 Each is allowed only if the user asked for it here. Say so and justify it in your report, or undo it.
 ```
 
-And it catches **servers left behind** (see principle 5, _Verify before completion_). A dev server, watcher or tail has no window, so a forgotten one keeps running after the session, and a few of them freeze a laptop that is short of memory. Before the agent finishes, each server the session started is checked. When its port is known (`--port`, `-p`, `PORT=` or the tool's default, such as 3000 for Next.js or 8787 for Wrangler), Receipts connects to that port on your machine: if something still answers, the server is still running. When the port is unknown (`npm run dev`, `wrangler tail`), it looks for a later command that stopped it. Anything still running sends the agent back to stop it, or to list it under **Left running** with its address when you asked to keep it.
+And it catches **servers left behind** (see principle 5, _Verify before completion_). A dev server, watcher or tail has no window, so a forgotten one keeps running after the session, and a few of them freeze a laptop that is short of memory.
+
+- **It knows which servers are the agent's.** Just before a server command runs, Receipts tries the ports it may use: its own (`--port`, `-p`, `PORT=` or the tool's default, such as 3000 for Next.js or 8787 for Wrangler) and the next ten, where Vite and Next.js move when it is taken. A port that already answered belongs to someone else, so **a server you started yourself is never blamed or stopped.** A server whose port is unknown (`npm run dev`, `wrangler tail`) is checked against Claude Code's own list of background tasks still running.
+- **Before the agent finishes,** anything of its own still running sends it back to stop it, or to list it under **Left running** with its address when you asked to keep it. Writing "I stopped it" is not enough while the port still answers.
+- **When the session ends,** Receipts stops the agent's servers that are still running, except those it left running on purpose.
+- **When the next session starts,** it stops what a session that ended without that cleanup (a crash, a closed window) left behind, and tells the agent, so it can tell you. It stops only the very process it recorded, matched by process ID and start time: a program that later reused the port is never touched.
 
 ```text
 Maison GR receipts: this session started a server that may still be running:
-- this session started `npx next start -p 3100` and something is still listening on localhost:3100.
+- this session started `npx next start -p 3100` and it is still listening on localhost:3100.
 Stop it now. If the user asked to keep it, list it under "Left running" with its address and how to stop it.
 ```
 
-It checks only command names in backticks (and the guarded Git actions and servers above), ignores what is inside a quoted commit message, never blocks twice in a row, doesn't raise an action again once a report has owned it, keeps its record on your machine, in Claude Code's plugin data folder, and connects only to `localhost`. Receipts need the [Claude Code plugin](#install); other agents get the same report format without the check.
+It checks only command names in backticks (and the guarded Git actions and servers above), ignores what is inside a quoted commit message, never blocks twice in a row, doesn't raise an action again once a report has owned it, keeps its record on your machine, in Claude Code's plugin data folder, and connects only to `localhost`. To stop a server it looks up the process on that port with the system's own tools (PowerShell on Windows, `lsof` or `ss` and `ps` on macOS and Linux); if it can't find or identify the process, it reports the server and stops nothing. Receipts need the [Claude Code plugin](#install); other agents get the same report format without the check.
 
 ## How it works
 

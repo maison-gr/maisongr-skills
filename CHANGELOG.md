@@ -10,8 +10,11 @@ What counts as breaking: renaming or removing a skill, subagent or principle, or
 
 ### Added
 
-- Receipts catches servers left running. Each dev server, watcher or tail the session started (`next dev`, `vite`, `astro dev`, `wrangler dev`, `npm start`, `docker compose up` and similar) is checked before the agent stops: by connecting to its port on `localhost` when the port is known (a `--port` or `-p` flag, `PORT=`, or the tool's default), otherwise by looking for a later command that stopped it. Anything still running sends the agent back to stop it, or to list it under "Left running" with its address when the user asked to keep it. Lines under "Left running" are not read as verified claims.
-
+- Receipts catches servers left running, and stops them. Each dev server, watcher or tail the session started (`next dev`, `vite`, `astro dev`, `wrangler dev`, `npm start`, `docker compose up` and similar) is checked before the agent stops.
+  - When the port is known (a `--port` or `-p` flag, `PORT=`, or the tool's default), the ports it may use (that one and the next ten, where Vite and Next.js move) are tried just before the command runs. Only a port that was free then, and answers now from a process that started after the command, counts as the agent's, so a server the user started is never blamed or stopped.
+  - When the port is unknown, Claude Code's list of background tasks still running decides; without it, a later command that stopped the server does.
+  - Anything still running sends the agent back to stop it, or to list it under "Left running" with its address when the user asked to keep it. Saying it was stopped is not enough while its port still answers. Lines under "Left running" are not read as verified claims.
+  - When the session ends, the agent's servers still running are stopped, except those left running on purpose. When the next session starts, what a session that ended without that cleanup left behind is stopped too, and the agent is told. Only the very process recorded is stopped, matched by process ID and start time, never one that later reused the port.
 - Three skills, bringing the total to thirteen:
   - `maisongr-git`: focused commits staged by name, a secret check of the staged diff before every commit, no direct commits to branches that deploy, safe conflict resolution, `.gitattributes`, semver tags, and what to do when a secret was committed (rotate first).
   - `maisongr-deploy`: confirmed approval, a rollback point recorded before the change, a backup before data changes, a cost estimate for paid services, and a check of the live system after every deploy.

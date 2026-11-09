@@ -1,5 +1,11 @@
 {
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/receipts/receipts.mjs\" before" }]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Bash|PowerShell",
@@ -15,6 +21,16 @@
     "Stop": [
       {
         "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/receipts/receipts.mjs\" check" }]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/receipts/receipts.mjs\" start" }]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [{ "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/receipts/receipts.mjs\" end", "timeout": 30 }]
       }
     ]
   }

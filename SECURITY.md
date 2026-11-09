@@ -12,7 +12,7 @@ Only the latest release receives security fixes. Update with `npx maisongr-skill
 ## What is in scope
 
 - **The installer** (`cli/maisongr-skills.mjs`): writing outside the target directory, overwriting files it did not create, or following links it should not.
-- **The receipts hooks** (`receipts/`): anything that runs commands, leaks the session record, or lets an agent bypass the check without running the command it reports.
+- **The receipts hooks** (`receipts/`): anything that runs commands it should not, stops a process that was not started by the agent, leaks the session record, or lets an agent bypass the check without running the command it reports.
 - **Skills, subagents and principles**: guidance that would lead an agent to an unsafe action, such as disabling a security control, exposing a secret or running a destructive command without asking.
 - **The CI workflows** in `.github/workflows/`.
 
