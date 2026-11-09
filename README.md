@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/maison-gr/maisongr-skills/main/.github/social-preview.png" alt="Maison GR AI Engineering Skills: seven principles and ten skills for AI coding agents" width="720">
+  <img src="https://raw.githubusercontent.com/maison-gr/maisongr-skills/main/.github/social-preview.png" alt="Maison GR AI Engineering Skills: seven principles and thirteen skills for AI coding agents" width="720">
 </p>
 
 <h1 align="center">One engineering standard for every AI coding agent</h1>
@@ -37,7 +37,7 @@ AI coding agents rarely fail for lack of knowledge. They fail because finishing 
 
 And when your team uses three different agents, you get three different standards, or none.
 
-Maison GR gives every agent the same seven principles and ten task methods, from one source file, installed with one command.
+Maison GR gives every agent the same seven principles and thirteen task methods, from one source file, installed with one command.
 
 ## 60 seconds
 
@@ -90,7 +90,7 @@ flowchart LR
     A --> U[Cursor]
     A --> P[Copilot]
     A --> G[Gemini CLI]
-    S["10 skills<br/>loaded on demand"] -.-> C & X & U & P & G
+    S["13 skills<br/>loaded on demand"] -.-> C & X & U & P & G
 ```
 
 - **Principles** are short, always-on instructions in `AGENTS.md`, the file most agents already read. About 6 KB.
@@ -136,6 +136,9 @@ flowchart LR
 | [`maisongr-database`](skills/maisongr-database/SKILL.md) | Safe migrations, integrity constraints, correct and fast queries |
 | [`maisongr-api`](skills/maisongr-api/SKILL.md) | API contracts, validation, consistent errors, compatible evolution |
 | [`maisongr-frontend`](skills/maisongr-frontend/SKILL.md) | Accessible (WCAG 2.2 AA), responsive, fast, finished interfaces |
+| [`maisongr-git`](skills/maisongr-git/SKILL.md) | Focused commits, a secret check before each one, safe branches, conflicts and tags |
+| [`maisongr-deploy`](skills/maisongr-deploy/SKILL.md) | Approved deploys with a rollback point, a cost estimate and a live check |
+| [`maisongr-open-source`](skills/maisongr-open-source/SKILL.md) | Contributions maintainers can accept: their rules, their AI policy, small proven pull requests |
 
 Agents pick a skill up when a request matches it. *"Users say the CSV import drops rows"* loads `maisongr-debugging`: reproduce, find the root cause, fix, add a regression test. To call one directly: `/maisongr:maisongr-security-review` in Claude Code, `$maisongr-security-review` in Codex.
 
@@ -182,7 +185,7 @@ To contribute a fix, a skill or a new platform, read [CONTRIBUTING](CONTRIBUTING
 
 ## Credits
 
-Maison GR started from [andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) and its four principles for LLM coding agents. It adds principles for verification, security and irreversible actions, ten task skills, subagents, one generated source for five platforms, and an installer. [RESEARCH.md](RESEARCH.md) lists every project and document that informed the design.
+Maison GR started from [andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) and its four principles for LLM coding agents. It adds principles for verification, security and irreversible actions, thirteen task skills, subagents, one generated source for five platforms, and an installer. [RESEARCH.md](RESEARCH.md) lists every project and document that informed the design.
 
 ## Further reading
 

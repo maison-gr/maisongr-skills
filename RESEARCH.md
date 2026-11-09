@@ -27,7 +27,7 @@ Maison GR's text, skills and examples are original. Nothing below is copied into
 - **Compatibility:** Claude Code and Cursor.
 - **Strengths:** very small; the always-on cost is low; the principles are memorable.
 - **Weaknesses:** the same text is maintained by hand in three files, so they can drift; no verification principle separate from goal-setting; no security guidance; no task-specific skills; no `LICENSE` file, although the manifests declare MIT.
-- **What Maison GR does differently:** adds verification, security and irreversible-action principles; generates every platform file from one source; adds ten task-specific skills; covers five platforms.
+- **What Maison GR does differently:** adds verification, security and irreversible-action principles; generates every platform file from one source; adds thirteen task-specific skills; covers five platforms.
 
 ### Skill collections
 

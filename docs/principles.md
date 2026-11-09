@@ -98,6 +98,9 @@ Several other concerns were considered for principle status. Each matters, but m
 | Error handling | Principles 2 and 6, [API skill](../skills/maisongr-api/SKILL.md) | Handle real errors (simplicity), do not leak internals (security) |
 | Documentation | [Documentation skill](../skills/maisongr-documentation/SKILL.md) | Needed when documentation is the task or is affected by it |
 | Accessibility and performance | [Frontend skill](../skills/maisongr-frontend/SKILL.md) | Specific to user interfaces |
+| Version control practice | [Git skill](../skills/maisongr-git/SKILL.md), principle 7 | The irreversible part (push, rewrite, attribution) is principle 7; branching, secret checks and tagging are task-specific |
+| Deployment and cost | [Deploy skill](../skills/maisongr-deploy/SKILL.md), principle 7 | Approval is principle 7; rollback points and live checks are needed only when shipping |
+| Contributing upstream | [Open-source skill](../skills/maisongr-open-source/SKILL.md) | Only applies to repositories the developer does not maintain |
 | Context efficiency | This framework's design | Applied by keeping always-on instructions short and moving detail into skills |
 | Observability | Not yet covered | A candidate for a future skill; see [CONTRIBUTING](../CONTRIBUTING.md) |
 

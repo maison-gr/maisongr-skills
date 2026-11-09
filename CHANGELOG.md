@@ -6,6 +6,13 @@ What counts as breaking: renaming or removing a skill, subagent or principle, or
 
 ## [Unreleased]
 
+### Added
+
+- Three skills, bringing the total to thirteen:
+  - `maisongr-git`: focused commits staged by name, a secret check of the staged diff before every commit, no direct commits to branches that deploy, safe conflict resolution, `.gitattributes`, semver tags, and what to do when a secret was committed (rotate first).
+  - `maisongr-deploy`: confirmed approval, a rollback point recorded before the change, a backup before data changes, a cost estimate for paid services, and a check of the live system after every deploy.
+  - `maisongr-open-source`: contributing to repositories you don't maintain. Reads CONTRIBUTING, the CLA or DCO and the project's AI policy before the first commit, and stops if AI-assisted contributions are refused. Claims the issue first, keeps one small proven pull request per problem, acts on review bots through the code without replying to them, and never chases maintainers.
+
 ## [1.3.1] - 2026-11-06
 
 ### Changed

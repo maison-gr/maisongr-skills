@@ -17,7 +17,7 @@ Deliver the change the developer actually needs, in the smallest correct form, w
 - Implementing a feature, fixing a defect, refactoring, or changing configuration in an existing codebase.
 - Any task that touches more than one file or behaviour that other code depends on.
 
-Not needed for a typo, a one-line rename, or a question that does not change code. Use the specialised skills when the task is mainly review, debugging, testing, security, architecture, documentation, database, API or frontend work.
+Not needed for a typo, a one-line rename, or a question that does not change code. Use the specialised skills when the task is mainly review, debugging, testing, security, architecture, documentation, database, API, frontend, version control, deployment or contributing to someone else's repository.
 
 ## Method
 

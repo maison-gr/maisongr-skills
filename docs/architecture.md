@@ -46,7 +46,7 @@ How this repository is organised, and why. Read this before adding a skill, a pl
 | `GEMINI.md` | Generated copy of `AGENTS.md` | Gemini CLI extension context |
 | `.cursor/rules/maisongr-engineering.mdc` | Generated copy with Cursor frontmatter | Cursor |
 | `.github/copilot-instructions.md` | Generated copy | GitHub Copilot |
-| `skills/` | Ten skills in the Agent Skills format | All five platforms |
+| `skills/` | Thirteen skills in the Agent Skills format | All five platforms |
 | `agents/` | Three subagents | Claude Code plugin, Gemini CLI extension |
 | `.claude-plugin/plugin.json` | Claude Code plugin manifest | Claude Code |
 | `.claude-plugin/marketplace.json` | Lists this repository's root as the plugin | Claude Code |

@@ -88,7 +88,7 @@ Commit these files so the whole team, and every agent, uses the same standard.
 
 ### Plugin (recommended)
 
-The plugin installs all ten skills, three subagents (`maisongr-architect`, `maisongr-reviewer`, `maisongr-tester`) and the receipts check, which compares the commands an agent lists under "Verified" with the commands it actually ran and flags guarded Git actions (force-push, `git add -A`, history rewrites, `--no-verify`, config changes) the report doesn't disclose. It keeps them updated.
+The plugin installs all thirteen skills, three subagents (`maisongr-architect`, `maisongr-reviewer`, `maisongr-tester`) and the receipts check, which compares the commands an agent lists under "Verified" with the commands it actually ran and flags guarded Git actions (force-push, `git add -A`, history rewrites, `--no-verify`, config changes) the report doesn't disclose. It keeps them updated.
 
 Inside Claude Code:
 
@@ -231,7 +231,7 @@ Copilot code review reads instructions from the pull request's head branch, so c
 
 ### Extension (recommended)
 
-The extension installs the principles as always-on context, plus all ten skills and three subagents:
+The extension installs the principles as always-on context, plus all thirteen skills and three subagents:
 
 ```bash
 gemini extensions install https://github.com/maison-gr/maisongr-skills
