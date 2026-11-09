@@ -153,6 +153,20 @@ test("does not flag staging by name, a plain commit, or a config read", () => {
   assert.equal(s.stop(report("committed the fix")), null);
 });
 
+test("does not read a flag of the next chained command as a git flag", () => {
+  const s = session();
+  s.ran('git commit -q -m "chore: add the icon" && git log -1 && sed -n 1,30p CHANGELOG.md');
+  s.ran("git push origin main; ls -f");
+  s.ran("git reset HEAD notes.md | grep -- --hard");
+  assert.equal(s.stop(report("committed the fix")), null);
+});
+
+test("still flags a guarded flag on a chained git command", () => {
+  const s = session();
+  s.ran("cd repo && git commit -n -m wip && git status");
+  assert.match(s.stop(report("done")).reason, /--no-verify/);
+});
+
 test("does not read what follows a config read as its value", () => {
   const s = session();
   s.ran("git config --global user.name\ngit config --global user.email\ngh pr list");
