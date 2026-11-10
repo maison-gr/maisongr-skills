@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/maison-gr/maisongr-skills/main/.github/social-preview.png" alt="Maison GR AI Engineering Skills: seven principles and thirteen skills for AI coding agents" width="720">
+  <img src="https://raw.githubusercontent.com/maison-gr/maisongr-skills/main/.github/social-preview.png" alt="maisongr-skills: seven principles and thirteen skills for AI coding agents" width="720">
 </p>
 
 <h1 align="center">One engineering standard for every AI coding agent</h1>

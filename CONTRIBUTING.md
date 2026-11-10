@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for helping improve Maison GR AI Engineering Skills. This guide explains what we accept and how to make a change that passes review.
+Thank you for helping improve maisongr-skills. This guide explains what we accept and how to make a change that passes review.
 
 ## What we look for
 

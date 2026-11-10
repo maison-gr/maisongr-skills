@@ -1,6 +1,6 @@
 # Research
 
-The projects and platform documentation studied while designing Maison GR AI Engineering Skills, what each taught us, and how it shaped the framework. Research was carried out on 2 November 2026. Repository details (activity, structure, licences) reflect what was published on that date.
+The projects and platform documentation studied while designing maisongr-skills, what each taught us, and how it shaped the framework. Research was carried out on 2 November 2026. Repository details (activity, structure, licences) reflect what was published on that date.
 
 Maison GR's text, skills and examples are original. Nothing below is copied into the framework; these projects informed decisions about structure, scope and compatibility.
 
