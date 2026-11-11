@@ -11,6 +11,12 @@
       "source": "./",
       "description": "Engineering skills and subagents that make AI coding agents understand before building, keep changes small, and prove results.",
       "category": "development"
+    },
+    {
+      "name": "maisongr-sitemap",
+      "source": { "source": "github", "repo": "maison-gr/maisongr-sitemap" },
+      "description": "Set up, replace or repair a website's sitemap: the XML search engines need, and a page in the site's own design for people.",
+      "category": "development"
     }
   ]
 }
