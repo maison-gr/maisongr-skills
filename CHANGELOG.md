@@ -6,6 +6,12 @@ What counts as breaking: renaming or removing a skill, subagent or principle, or
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-11-12
+
+### Added
+
+- Each GitHub release attaches one upload-ready `.zip` per skill for the Claude app (Settings > Skills). `npm run package:claude` builds them locally in `dist/claude-skills/`, and skips any skill whose name or description the app would refuse.
+
 ## [1.5.0] - 2026-11-11
 
 ### Added
