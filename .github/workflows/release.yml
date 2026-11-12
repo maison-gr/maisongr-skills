@@ -2,7 +2,7 @@ name: Release
 
 # Publishes to npm when a GitHub release is published, through npm trusted publishing:
 # no token is stored, and npm records a provenance attestation linking the package to
-# this workflow run and commit.
+# this workflow run and commit. It also attaches one Claude app skill .zip per skill.
 
 on:
   release:
@@ -30,3 +30,21 @@ jobs:
       - run: node scripts/validate.mjs
       - run: npm test
       - run: npm publish --provenance --access public
+
+  # Attaches one upload-ready .zip per skill for the Claude app (Settings > Skills > Add).
+  # A separate job so only this one can write to the release, and the npm job stays read-only.
+  claude-skills:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # upload release assets
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+      - run: npm run package:claude
+      - name: Attach the skill zips to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: gh release upload "$TAG" dist/claude-skills/*.zip --clobber
