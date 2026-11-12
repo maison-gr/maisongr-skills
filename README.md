@@ -184,6 +184,8 @@ Commit the result so your whole team, and every agent, works to the same standar
 gemini extensions install https://github.com/maison-gr/maisongr-skills
 ```
 
+**Claude app** (Settings > Skills): every [release](https://github.com/maison-gr/maisongr-skills/releases/latest) carries one `.zip` per skill. Upload the ones you want.
+
 The plugin and extension install the skills and subagents; for the always-on principles in Claude Code, also run `npx maisongr-skills --agent claude` or add `@AGENTS.md` to your `CLAUDE.md`. The [installation guide](docs/installation.md) covers project and user scopes, manual copying, updates and removal on every platform.
 
 ## Make it yours
