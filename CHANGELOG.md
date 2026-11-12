@@ -6,6 +6,16 @@ What counts as breaking: renaming or removing a skill, subagent or principle, or
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-11-11
+
+### Added
+
+- The Maison GR marketplace lists `maisongr-sitemap`: `/plugin install maisongr-sitemap --marketplace maison-gr/maisongr-skills` installs its Agent Skill and MCP server.
+
+### Changed
+
+- Every GitHub Action is pinned to a commit SHA, and CodeQL moves to v4.
+
 ## [1.4.0] - 2026-11-09
 
 ### Added
