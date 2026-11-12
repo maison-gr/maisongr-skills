@@ -1,6 +1,6 @@
 {
   "name": "maisongr-skills",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Engineering discipline for AI coding agents: seven principles and thirteen skills for Claude Code, Codex, Cursor, GitHub Copilot and Gemini CLI.",
   "keywords": [
     "agent-skills",
