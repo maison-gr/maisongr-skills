@@ -1,6 +1,6 @@
 ---
 name: maisongr-security-review
-description: Maison GR method for reviewing code for security vulnerabilities. Use when asked for a security review or audit, and when a change touches authentication, authorisation, sessions, user input handling, file uploads, payments, personal data, secrets, cryptography, third-party integrations, dependencies, or AI features that process untrusted content.
+description: Maison GR method for reviewing code for security vulnerabilities. Use when asked for a security review or audit, and when a change touches authentication, authorisation, sessions, user input handling, file uploads, payments, personal data, secrets, cryptography, third-party integrations, dependencies, or AI features that process untrusted content, and before an application built quickly with an AI assistant or a starter template goes live.
 license: MIT
 metadata:
   author: Maison GR
@@ -19,6 +19,7 @@ Find vulnerabilities an attacker could realistically exploit, prove each one wit
 - New endpoints, forms, file uploads, webhooks or integrations.
 - Code handling payments, personal data, health data or credentials.
 - LLM or agent features that read untrusted content or can call tools.
+- An application built quickly with an AI assistant or from a starter template, before it goes live.
 
 For general code quality, use the code review skill instead.
 
@@ -80,7 +81,25 @@ Broken access control is the most common serious flaw. For every protected opera
 - Debug modes and verbose errors are disabled in production configuration.
 - Dependencies: run the ecosystem's audit tool (`npm audit`, `pnpm audit`, `pip-audit`, `cargo audit`, `govulncheck`) and report known vulnerabilities that are reachable.
 
-### 7. Verify each finding
+### 7. Check what generated code ships by default
+
+Code written quickly, by an AI assistant or from a starter template, tends to work on the first run and to fail in the same few places. When most of an application was produced that way, check each of these whatever the diff shows:
+
+| Failure | How to check |
+|---|---|
+| A secret in the browser | Search the **built** client output, not only the source, for keys and tokens. A variable with a public prefix (`NEXT_PUBLIC_`, `VITE_`, `EXPO_PUBLIC_`) is shipped to every visitor; an admin or service-role key must never carry one |
+| A database the client reaches directly, with no row rules | For hosted backends queried from the browser, confirm row-level security or security rules are enabled on **every** table and storage bucket, and that no policy is simply "allow all". A missing rule exposes the whole table to anyone holding the public key |
+| Authorisation only in the interface | A hidden button or a client-side route guard is not a control. Call the server action, API route or function directly, signed out and as another user |
+| Values trusted from the client | The price, user id, role, plan or discount is read from the request instead of the session and the database |
+| Unsigned webhooks | A payment or integration webhook acts on a request without verifying its signature, or can be replayed |
+| Starter defaults left on | Wildcard CORS, debug or seed routes, an example admin account, default credentials, a committed `.env` |
+| A dependency that should not be there | A package name that was invented, misspelt or impersonates a known one. Confirm each new dependency exists, is the intended project and is maintained |
+| Model output trusted | User or fetched content is concatenated into the instructions; the model's output is used as HTML, SQL, a shell argument, a file path or a tool call without validation |
+| No limit on costly endpoints | Sign-in, sign-up, password reset and any route that calls a paid API can be called without a rate limit, so one script can run up a bill or brute-force a code |
+
+Prove access-control failures with a second test account against a local or test instance: read, change and delete the first account's records.
+
+### 8. Verify each finding
 
 For every candidate finding, write the attack path: who sends what, through which entry point, to reach which impact. Check that no upstream control already blocks it. If you can safely demonstrate it in a local or test environment, do so. Never test against production or third-party systems without written authorisation.
 
@@ -103,6 +122,7 @@ For every candidate finding, write the attack path: who sends what, through whic
 
 - [ ] Entry points and trust boundaries were listed.
 - [ ] Every protected operation was checked for object-level authorisation.
+- [ ] For generated or template-based code, the built client output was searched for secrets and the server was called directly as another user.
 - [ ] Each finding has an attack path and a severity.
 - [ ] The dependency audit was run, or the report says why not.
 
