@@ -102,7 +102,7 @@ Then judge the rendered screen against it:
 
 Return a verdict:
 
-- **Pass** only when the first read and the primary action are obvious, and no forbidden default remains without a reason from the product.
+- **Pass** only when no check in the table holds, the first read and the primary action are obvious, and no forbidden default remains without a reason from the product.
 - **Hold** otherwise. Each hold names what is seen, why it fails the contract, the concrete change, and the viewport or state that will prove it.
 
 Judge by what a user can see or do. "Clean", "modern" and "premium" are not findings. Simple is not generic: do not hold a screen for being plain, and name what already works so it is not redesigned away. Changing the visual direction is the developer's decision; propose it, do not impose it.
