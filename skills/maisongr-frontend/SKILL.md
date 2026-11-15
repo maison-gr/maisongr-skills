@@ -73,9 +73,39 @@ The result of every action must be visible. A button that does nothing visible f
 - Animate only `transform` and `opacity`. Every animation should explain a change of state; remove animation that is only decoration.
 - Measure with Lighthouse or Web Vitals rather than guessing. Targets: LCP under 2.5 s, INP under 200 ms, CLS under 0.1.
 
-### 7. Review visually
+### 7. Run the finish gate
 
-Look at the rendered result, not only the code. Check alignment, spacing rhythm, type hierarchy, long and empty content, and dark mode if the product supports it. Remove anything generic or unfinished: placeholder text, default component styling, inconsistent radii, stray shadows.
+Look at the rendered result, at a phone width and a desktop width, not only the code. A screen can pass every check above and still look like it belongs to any product.
+
+First write the screen's contract in a few lines. If you cannot, the design is not decided yet:
+
+```text
+User and job:        who is on this screen, and what they came to finish
+First read:          the one object, status or number the eye must find first
+Primary action:      the one thing the screen exists to let them do
+Density:             compact, balanced or spacious, and why that suits the job
+Forbidden defaults:  the generic patterns that would be wrong for this product
+```
+
+Then judge the rendered screen against it:
+
+| Check | Hold when |
+|---|---|
+| Product legibility | A newcomer could not tell from the first viewport what the product is or what to do |
+| Hierarchy | Visual weight follows the component library's defaults instead of the user's decision: equal cards for unequal things, the key figure below the fold |
+| Pattern fit | A layout is there by habit: a hero, a card grid, a dashboard of tiles the job does not call for |
+| Decoration | A gradient, shadow, glass effect, oversized radius, icon or animation explains nothing |
+| Finish | Alignment, spacing rhythm, type scale or radii are inconsistent; placeholder text or default component styling remains |
+| Real content | Long names, empty lists, large numbers or translated text break the layout |
+| Narrow screen | The phone layout is the desktop layout stacked, hiding what the user scans for |
+| Theme | Dark mode, where offered, is an inverted light theme rather than designed |
+
+Return a verdict:
+
+- **Pass** only when no check in the table holds, the first read and the primary action are obvious, and no forbidden default remains without a reason from the product.
+- **Hold** otherwise. Each hold names what is seen, why it fails the contract, the concrete change, and the viewport or state that will prove it.
+
+Judge by what a user can see or do. "Clean", "modern" and "premium" are not findings. Simple is not generic: do not hold a screen for being plain, and name what already works so it is not redesigned away. Changing the visual direction is the developer's decision; propose it, do not impose it.
 
 ## Constraints
 
@@ -91,7 +121,8 @@ Look at the rendered result, not only the code. Check alignment, spacing rhythm,
 - [ ] Checked at phone, tablet and desktop widths with no horizontal overflow.
 - [ ] Loading, empty, error and success states exist and were exercised.
 - [ ] Lint, type check and the build pass; Lighthouse or Web Vitals were measured where practical.
+- [ ] The finish gate was run on the rendered screen at phone and desktop widths, and every hold was resolved or reported.
 
 ## Output
 
-What was built or changed, the states covered, the viewports and assistive paths checked, measured performance where available, and any design decisions that need the developer's review.
+What was built or changed, the states covered, the viewports and assistive paths checked, measured performance where available, the finish-gate verdict with any hold still open, and any design decisions that need the developer's review.
