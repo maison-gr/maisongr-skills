@@ -97,7 +97,7 @@ Code written quickly, by an AI assistant or from a starter template, tends to wo
 | Model output trusted | User or fetched content is concatenated into the instructions; the model's output is used as HTML, SQL, a shell argument, a file path or a tool call without validation |
 | No limit on costly endpoints | Sign-in, sign-up, password reset and any route that calls a paid API can be called without a rate limit, so one script can run up a bill or brute-force a code |
 
-Prove access-control failures with a second test account against a local or test instance: read, change and delete the first account's records.
+Prove access-control failures with a second test account against a local or test instance: try to read, change and delete records created for the test under the first account. Never try it on real data.
 
 ### 8. Verify each finding
 
@@ -122,7 +122,7 @@ For every candidate finding, write the attack path: who sends what, through whic
 
 - [ ] Entry points and trust boundaries were listed.
 - [ ] Every protected operation was checked for object-level authorisation.
-- [ ] For generated or template-based code, the built client output was searched for secrets and the server was called directly as another user.
+- [ ] For generated or template-based code, the built client output was searched for secrets where the application has a client, and the server was called directly as another user.
 - [ ] Each finding has an attack path and a severity.
 - [ ] The dependency audit was run, or the report says why not.
 

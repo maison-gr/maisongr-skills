@@ -65,7 +65,7 @@ Use the platform's locale-aware formatters (`Intl` in JavaScript, or the languag
 
 | Value | Rule |
 |---|---|
-| Dates and times | Store in UTC; format in the user's locale and time zone. Never build a date from string pieces |
+| Dates and times | Store a moment in time in UTC and format it in the user's locale and time zone. A date with no time (a birthday, a due date) is a calendar date: store it as one and never shift it by time zone. Never build a date from string pieces |
 | Numbers | The locale decides decimal and grouping separators: `1,234.5`, `1 234,5`, `1.234,5` |
 | Currency | Store the amount with its currency code. The locale decides symbol and position: `$29.00`, `29,00 $`. Never infer the currency from the language |
 | Relative time, lists, units | Use the formatter; "3 days ago" and "A, B and C" are grammar, not concatenation |
@@ -106,7 +106,7 @@ Use the platform's locale-aware formatters (`Intl` in JavaScript, or the languag
 
 ## Verification
 
-- [ ] No user-facing string remains in code in the changed files, including accessibility text and metadata.
+- [ ] No user-facing string this task added or changed remains in code, including accessibility text and metadata. Older hard-coded strings in the same files are reported, not fixed uninvited.
 - [ ] Every supported locale has every new key; the missing-key check passes.
 - [ ] Plurals were exercised with 0, 1, 2 and a large number in each language.
 - [ ] Dates, numbers and money were viewed in each locale.

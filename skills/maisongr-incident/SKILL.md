@@ -67,7 +67,8 @@ Users need the service back more than they need the cause understood.
 - Get the developer's approval for each action on production, even under pressure. State what it does, how to undo it, and what it could cost.
 - Change one thing at a time and check its effect before the next. Two simultaneous changes hide which one worked, and which one made it worse.
 - Before any step that destroys evidence, save the logs, the error output and the state you can.
-- A fix written in a hurry is the riskiest change of the day. Roll back first; fix forward only when no rollback exists.
+- Before rolling back, check that the previous version still works with the data as it is now: a migration that already ran can make the old release fail.
+- A fix written in a hurry is the riskiest change of the day. Roll back first; fix forward only when no rollback exists or the rollback is not compatible.
 
 ### 4. Tell people the truth, on a schedule
 
@@ -81,7 +82,7 @@ Users need the service back more than they need the cause understood.
 
 The incident is not over when the mitigation command exits.
 
-- The failing path works on the live system: run it.
+- The failing path works on the live system: run it, in a way that has no real effect on users or money. Use a read-only request, a test account or the provider's test mode. Never create a real payment, order or message to prove recovery; where no safe check exists, rely on monitoring and say so.
 - Error rates, latency and queues are back to their normal levels, and stay there for an agreed watch period.
 - Find out what happened to data during the incident window: requests lost, jobs not run, payments or emails duplicated, records half-written. List what needs repairing; repair nothing without approval.
 - Tell the developer it is resolved, and what is still being watched.
@@ -138,7 +139,7 @@ Detection, diagnosis, mitigation, communication.
 
 - [ ] The developer was told the impact and severity before any action was taken.
 - [ ] Every production action was approved, recorded with its time, and checked for its effect.
-- [ ] Recovery was confirmed on the live system, and the data affected during the incident was assessed.
+- [ ] Recovery was confirmed on the live system (for a post-mortem written afterwards, from the recorded evidence, with anything unconfirmed labelled), and the data affected during the incident was assessed.
 - [ ] The cause is supported by evidence, or labelled unconfirmed.
 - [ ] The post-mortem has tracked actions that prevent and detect a recurrence.
 

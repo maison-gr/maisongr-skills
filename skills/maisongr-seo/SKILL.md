@@ -82,7 +82,7 @@ Write for the reader. A query repeated unnaturally reads badly and ranks worse.
 - Generate the sitemap from the same route list as the site. Never edit it by hand.
 - It lists every public, indexable URL in every language, and nothing that redirects, returns an error or is `noindex`.
 - `<lastmod>` is the date the content really changed, not the build or request time. Search engines stop trusting dates that move on every visit.
-- `robots.txt` allows public content, disallows private areas, and names the sitemap by its absolute URL.
+- `robots.txt` allows public content, disallows what crawlers have no reason to fetch (API routes, internal tools), and names the sitemap by its absolute URL. Pages that rely on `noindex` stay crawlable (step 4).
 - Whether AI crawlers may read the site is the owner's decision. Ask, record the answer, and keep `robots.txt` consistent with it.
 
 ### 8. Write so an assistant can quote it
