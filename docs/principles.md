@@ -103,6 +103,9 @@ Several other concerns were considered for principle status. Each matters, but m
 | Version control practice | [Git skill](../skills/maisongr-git/SKILL.md), principle 7 | The irreversible part (push, rewrite, attribution) is principle 7; branching, secret checks and tagging are task-specific |
 | Deployment and cost | [Deploy skill](../skills/maisongr-deploy/SKILL.md), principle 7 | Approval is principle 7; rollback points and live checks are needed only when shipping |
 | Contributing upstream | [Open-source skill](../skills/maisongr-open-source/SKILL.md) | Only applies to repositories the developer does not maintain |
+| Internationalisation | [i18n skill](../skills/maisongr-i18n/SKILL.md) | Only applies to products in more than one language |
+| Search and AI discoverability | [SEO skill](../skills/maisongr-seo/SKILL.md) | Only applies to public web pages |
+| Incident response | [Incident skill](../skills/maisongr-incident/SKILL.md), principle 7 | Approval for every production action is principle 7; stabilising, the timeline and the post-mortem are needed only when production breaks |
 | Context efficiency | This framework's design | Applied by keeping always-on instructions short and moving detail into skills |
 | Observability | Not yet covered | A candidate for a future skill; see [CONTRIBUTING](../CONTRIBUTING.md) |
 

@@ -6,6 +6,18 @@ What counts as breaking: renaming or removing a skill, subagent or principle, or
 
 ## [Unreleased]
 
+### Added
+
+- Three skills, bringing the total to sixteen:
+  - `maisongr-i18n`: products in more than one language. Every user-facing string externalised, whole sentences instead of joined fragments, the library's plural rules, locale-aware dates, numbers and money, layouts that hold longer and right-to-left text, a language switcher that never forces a choice, and every language kept in step.
+  - `maisongr-seo`: pages found by people, search engines and AI assistants. One search intent per page, a check that no other page competes for it, each page's own canonical, reciprocal `hreflang`, structured data that is true, a generated sitemap with honest dates, facts written as text an assistant can quote, `llms.txt`, and a check of the live page.
+  - `maisongr-incident`: a production incident. Size it and tell the developer, keep a timeline, stabilise with the most reversible step before diagnosing, get approval for every production action, confirm recovery on the live system, then write a blameless post-mortem with tracked actions.
+
+### Changed
+
+- `maisongr-frontend` replaces its visual review with a finish gate: a short contract for the screen (user and job, first read, primary action, density, forbidden defaults), eight checks on the rendered screen at phone and desktop widths, and a pass or hold verdict where each hold names the change and how to prove it.
+- `maisongr-security-review` checks what code written quickly by an AI assistant or from a starter template ships by default: secrets in the built client output, client-reachable databases without row rules, authorisation only in the interface, values trusted from the client, unsigned webhooks, starter defaults, invented or impersonating dependencies, trusted model output, and costly endpoints without a rate limit.
+
 ## [1.6.0] - 2026-11-12
 
 ### Added

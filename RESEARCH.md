@@ -1,6 +1,6 @@
 # Research
 
-The projects and platform documentation studied while designing maisongr-skills, what each taught us, and how it shaped the framework. Research was carried out on 2 November 2026. Repository details (activity, structure, licences) reflect what was published on that date.
+The projects and platform documentation studied while designing maisongr-skills, what each taught us, and how it shaped the framework. Research was carried out on 2 November 2026; agency-agents was studied on 13 November 2026. Repository details (activity, structure, licences) reflect what was published on that date.
 
 Maison GR's text, skills and examples are original. Nothing below is copied into the framework; these projects informed decisions about structure, scope and compatibility.
 
@@ -27,7 +27,7 @@ Maison GR's text, skills and examples are original. Nothing below is copied into
 - **Compatibility:** Claude Code and Cursor.
 - **Strengths:** very small; the always-on cost is low; the principles are memorable.
 - **Weaknesses:** the same text is maintained by hand in three files, so they can drift; no verification principle separate from goal-setting; no security guidance; no task-specific skills; no `LICENSE` file, although the manifests declare MIT.
-- **What Maison GR does differently:** adds verification, security and irreversible-action principles; generates every platform file from one source; adds thirteen task-specific skills; covers five platforms.
+- **What Maison GR does differently:** adds verification, security and irreversible-action principles; generates every platform file from one source; adds sixteen task-specific skills; covers five platforms.
 
 ### Skill collections
 
@@ -75,6 +75,17 @@ Maison GR's text, skills and examples are original. Nothing below is copied into
 - **Licence:** MIT.
 - **Weaknesses:** contributions come from many third parties and the README asks users to inspect each one.
 - **Lesson:** Copilot's `applyTo` instructions are a good fit for stack-specific rules; the installation guide shows how to add them.
+
+#### msitarzewski/agency-agents
+
+[Repository](https://github.com/msitarzewski/agency-agents), studied at commit `8ae6164` on 13 November 2026.
+
+- **Problem it solves:** a roster of 283 persona agents, one Markdown file per role, across engineering, design, testing, security, marketing, sales and many other fields, converted and installed into more than a dozen tools by its own scripts.
+- **Strongest ideas:** an interface review that ends in a pass or hold verdict against a written design contract; a security audit aimed at the failures generated code ships by default (secrets in the client bundle, missing row-level rules, model output trusted); evidence that matches the claim, where a screenshot proves appearance and not behaviour; and roles for work our skills did not cover: internationalisation, search and AI citation, incident command.
+- **Licence:** MIT.
+- **Strengths:** breadth; concrete templates and checklists inside many agents; a linter and tests for its own converter.
+- **Weaknesses:** each agent carries a persona (an invented memory, experience and personality) that costs context and teaches no method; many state success metrics with no measurement behind them; one reviewer defaults to "needs work" and to fixed grades, which pushes an agent to invent findings; the multi-agent pipeline adds handoff documents and retry loops to every task; most roles are outside software engineering.
+- **Lesson:** take the methods and leave the personas. Maison GR added `maisongr-i18n`, `maisongr-seo` and `maisongr-incident`, a finish gate in `maisongr-frontend` and a generated-code check in `maisongr-security-review`, each written from scratch in the existing skill format, and kept the rule that zero findings is a valid review result.
 
 #### openai/skills
 
@@ -149,6 +160,7 @@ Accessed 2 November 2026.
 - https://github.com/obra/superpowers
 - https://github.com/affaan-m/everything-claude-code
 - https://github.com/github/awesome-copilot
+- https://github.com/msitarzewski/agency-agents (accessed 13 November 2026)
 - https://github.com/openai/skills
 - https://github.com/openai/plugins
 - https://github.com/continuedev/continue
