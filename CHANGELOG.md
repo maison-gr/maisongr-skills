@@ -6,6 +6,8 @@ What counts as breaking: renaming or removing a skill, subagent or principle, or
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-11-14
+
 ### Added
 
 - Three skills, bringing the total to sixteen:
