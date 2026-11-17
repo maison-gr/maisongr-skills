@@ -5,6 +5,7 @@ import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, writeFil
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { createUi } from "../cli/ui.mjs";
 
 const cli = fileURLToPath(new URL("../cli/maisongr-skills.mjs", import.meta.url));
 const skillCount = readdirSync(fileURLToPath(new URL("../skills", import.meta.url))).length;
@@ -23,6 +24,18 @@ function run(args, { cwd, home } = {}) {
 }
 
 const read = (...parts) => readFileSync(join(...parts), "utf8");
+
+// The closing line: milliseconds under a second, then seconds with one decimal ("Done 286ms", "Done 1.8s").
+const DONE_LINE = /\n {2}[✓+] Done (\d+ms|\d+\.\d+s)\n/;
+
+test("the closing line matches the pattern however long the run took", () => {
+  for (const ms of [286, 1834, 12000]) {
+    let out = "";
+    createUi((s) => (out += s), { color: false, unicode: true }).done(ms);
+    assert.match(`\n${out}`, DONE_LINE, `${ms}ms`);
+  }
+});
+
 const skills = (...parts) => readdirSync(join(...parts)).filter((name) => name.startsWith("maisongr-"));
 const count = (text, needle) => text.split(needle).length - 1;
 
@@ -155,7 +168,7 @@ test("success: a title, what changed file by file, the next steps and Done", () 
   assert.match(out, /\n {2}Next\n {2}[→>] Restart your agent/);
   assert.match(out, /\n {2}You can also\n/);
   for (const command of ["list", "--global", "remove", "--help"]) assert.match(out, new RegExp(`[→>] npx maisongr-skills ${command}`), command);
-  assert.match(out, /\n {2}[✓+] Done \d+m?s\n/);
+  assert.match(out, DONE_LINE);
 });
 
 test("nothing to change is shown quietly, not as a change", () => {
