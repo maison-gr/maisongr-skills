@@ -6,6 +6,8 @@ A breaking change (renaming or removing a skill, subagent or principle, or chang
 
 ## [Unreleased]
 
+## [1.7.1] - 2026-11-17
+
 ### Added
 
 - `maisongr-agent-safety`, bringing the total to seventeen skills: running AI coding agents as a managed insider risk. An inventory of what the agent can reach, the least access that does the job (read-only, scoped, no production secrets), containment, a human on every irreversible action, a record the agent cannot edit, independent verification, and what to do first when an agent goes wrong.
