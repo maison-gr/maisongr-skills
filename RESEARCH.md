@@ -140,6 +140,43 @@ The details are recorded, with links, in [docs/compatibility.md](docs/compatibil
 | No platform reads `CODEX.md` or `CURSOR.md` | Those files are not shipped |
 | Gemini CLI is being replaced by Antigravity CLI for some users | Documented as a known risk |
 
+## Industry signals
+
+### Software engineering after code becomes cheap (17 November 2026)
+
+Microsoft's CEO, interviewed by Gergely Orosz on The Pragmatic Engineer (published 16 November 2026), described agents moving coding to the command line within months, and argued that with code generation cheap, verification is the hard part. Coverage of the interview also attributes to him: treat agents as an insider risk with records they cannot tamper with, keep the agent harness, memory and model separable to avoid lock-in, judge models on private evaluations, and check one model family's output with another.
+
+- **What Maison GR already did:** verification as a principle; one source for five agent platforms, so no single vendor; approval for irreversible actions.
+- **What it changed:** `maisongr-code-review` treats an author's report as claims and asks for a cross-model review on high-risk changes; `maisongr-agent-safety` covers agent access, records and independent checks; `maisongr-architecture` keeps AI models swappable behind one interface with a private evaluation set.
+- **Caveat:** these points come from the published episode page and press coverage, not a full transcript.
+
+## Keeping the skills current
+
+Models, agents and platforms change every few months, so a skill can go stale without anyone editing it.
+
+- **Every quarter** (next: 17 February 2027), each skill is re-read against the current platform documentation and the latest industry signals, and either confirmed or changed. The review is recorded below and in `CHANGELOG.md`.
+- **Out of cycle,** when a platform changes its skill or agent format, or a finding like the one above changes what good practice is.
+
+| Skill | Last changed | Next review |
+|---|---|---|
+| `maisongr-agent-safety` | 2026-11-17 | 2027-02-17 |
+| `maisongr-api` | 2026-11-02 | 2027-02-17 |
+| `maisongr-architecture` | 2026-11-17 | 2027-02-17 |
+| `maisongr-code-review` | 2026-11-17 | 2027-02-17 |
+| `maisongr-database` | 2026-11-02 | 2027-02-17 |
+| `maisongr-debugging` | 2026-11-02 | 2027-02-17 |
+| `maisongr-deploy` | 2026-11-09 | 2027-02-17 |
+| `maisongr-documentation` | 2026-11-02 | 2027-02-17 |
+| `maisongr-engineering` | 2026-11-09 | 2027-02-17 |
+| `maisongr-frontend` | 2026-11-14 | 2027-02-17 |
+| `maisongr-git` | 2026-11-09 | 2027-02-17 |
+| `maisongr-i18n` | 2026-11-14 | 2027-02-17 |
+| `maisongr-incident` | 2026-11-14 | 2027-02-17 |
+| `maisongr-open-source` | 2026-11-09 | 2027-02-17 |
+| `maisongr-security-review` | 2026-11-14 | 2027-02-17 |
+| `maisongr-seo` | 2026-11-14 | 2027-02-17 |
+| `maisongr-testing` | 2026-11-02 | 2027-02-17 |
+
 ## Engineering lessons
 
 1. **Principles must be few and testable.** A reviewer should be able to point at a diff and say which principle it breaks.
@@ -166,6 +203,11 @@ Accessed 2 November 2026.
 - https://github.com/continuedev/continue
 - https://github.com/agentskills/agentskills
 - https://agents.md/
+
+**Industry signals** (accessed 17 November 2026)
+
+- https://newsletter.pragmaticengineer.com/p/software-engineering-after-code-becomes
+- https://thenextweb.com/news/satya-nadella-claude-code-ide-pragmatic-engineer
 
 **Platform documentation**
 
