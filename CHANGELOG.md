@@ -1,8 +1,8 @@
 # Changelog
 
-All notable changes to this project are documented here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+All notable changes to this project are documented here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and each release adds 0.0.1 to the version (1.7.0, 1.7.1, 1.7.2), whatever it contains.
 
-What counts as breaking: renaming or removing a skill, subagent or principle, or changing an installation path. Rewording guidance is a minor or patch change.
+A breaking change (renaming or removing a skill, subagent or principle, or changing an installation path) is called out at the top of its release notes, under **Breaking**.
 
 ## [Unreleased]
 
