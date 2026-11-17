@@ -14,6 +14,7 @@ What counts as breaking: renaming or removing a skill, subagent or principle, or
 
 - `maisongr-architecture` adds AI model dependencies: one interface to the provider, the model and prompt in configuration, a private evaluation set run before any model or prompt change, cost bounds, and defined behaviour when the provider fails.
 - `maisongr-code-review` treats the author's report as claims, not evidence: it re-runs every check the report says passed, compares the report with the diff, checks that an added test fails without the change, and marks what it could not reproduce as unverified. For changes to security, payments, personal data or production data it asks for a second review in a fresh context, ideally by a model from a different family, and settles disagreements by verifying, never by majority.
+- `RESEARCH.md` records industry signals and a quarterly review of every skill, with each skill's last change and next review date.
 - The `maisongr-reviewer` subagent re-runs the checks the author's report claims and compares the report with the diff.
 
 ## [1.7.0] - 2026-11-14
