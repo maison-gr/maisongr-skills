@@ -115,11 +115,11 @@ Use short conventional commit messages, such as `fix: correct Gemini skill path`
 
 Maintainers release by:
 
-1. Moving `[Unreleased]` entries under a new version heading in `CHANGELOG.md`.
+1. Moving `[Unreleased]` entries under a new version heading in `CHANGELOG.md`: the last version plus 0.0.1 (1.7.0 → 1.7.1).
 2. Setting the same version in `.claude-plugin/plugin.json`, `gemini-extension.json` and `package.json`. The validator checks that all four match.
 3. Running `node scripts/validate.mjs` and `npm test`, and checking the package contents with `npm pack --dry-run`.
-4. Tagging the release (`git tag v1.2.0`), pushing it, and publishing a GitHub release for the tag. The [release workflow](.github/workflows/release.yml) then publishes to npm with provenance; nobody publishes from a local machine.
+4. Tagging the release (`git tag v1.7.1`), pushing it, and publishing a GitHub release for the tag. The [release workflow](.github/workflows/release.yml) then publishes to npm with provenance; nobody publishes from a local machine.
 
 Claude Code users receive an update only when the version changes; npx users get the new version on their next run.
 
-Versioning follows [Semantic Versioning](https://semver.org/). Renaming or removing a skill, subagent or principle, or changing an installation path, is a major change.
+Every release adds 0.0.1 to the version, whatever it contains. Renaming or removing a skill, subagent or principle, or changing an installation path, is a breaking change: it is listed first in the release notes, under **Breaking**.

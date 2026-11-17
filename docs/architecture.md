@@ -84,4 +84,4 @@ It does not check what only a platform can check. For Claude Code, run `claude p
 
 ## Versioning
 
-The version appears in `.claude-plugin/plugin.json`, `gemini-extension.json`, `package.json` and the top entry of `CHANGELOG.md`, and they must match. Claude Code only offers an update when the manifest version changes, so every release bumps it. Renaming or removing a skill, subagent or principle is a breaking change.
+The version appears in `.claude-plugin/plugin.json`, `gemini-extension.json`, `package.json` and the top entry of `CHANGELOG.md`, and they must match. Claude Code only offers an update when the manifest version changes, so every release bumps it, by 0.0.1 each time (1.7.0 → 1.7.1). Renaming or removing a skill, subagent or principle is a breaking change, listed first in the release notes.
