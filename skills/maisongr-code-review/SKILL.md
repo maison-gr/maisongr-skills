@@ -34,6 +34,8 @@ Writing code is cheap; proving it right is the hard part. When the change comes 
 - A test that was added must fail without the change. If you can, revert the fix locally and run it.
 - Report any claim you could not reproduce as **unverified**, with the command you ran.
 
+For a change that touches security, payments, personal data or production data, ask for a second review in a fresh context, ideally by a model from a different family than the one that wrote the change (for example, review with Codex or Gemini CLI what was written with Claude Code, and the other way round). Models of one family tend to share blind spots. Where the two reviews disagree, verify the point; never settle it by majority.
+
 ### 2. Review in priority order
 
 Work through these passes. Spend your effort at the top.
