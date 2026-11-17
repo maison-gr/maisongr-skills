@@ -46,7 +46,7 @@ How this repository is organised, and why. Read this before adding a skill, a pl
 | `GEMINI.md` | Generated copy of `AGENTS.md` | Gemini CLI extension context |
 | `.cursor/rules/maisongr-engineering.mdc` | Generated copy with Cursor frontmatter | Cursor |
 | `.github/copilot-instructions.md` | Generated copy | GitHub Copilot |
-| `skills/` | Sixteen skills in the Agent Skills format | All five platforms |
+| `skills/` | Seventeen skills in the Agent Skills format | All five platforms |
 | `agents/` | Three subagents | Claude Code plugin, Gemini CLI extension |
 | `.claude-plugin/plugin.json` | Claude Code plugin manifest | Claude Code |
 | `.claude-plugin/marketplace.json` | Lists this repository's root as the plugin | Claude Code |
@@ -84,4 +84,4 @@ It does not check what only a platform can check. For Claude Code, run `claude p
 
 ## Versioning
 
-The version appears in `.claude-plugin/plugin.json`, `gemini-extension.json`, `package.json` and the top entry of `CHANGELOG.md`, and they must match. Claude Code only offers an update when the manifest version changes, so every release bumps it. Renaming or removing a skill, subagent or principle is a breaking change.
+The version appears in `.claude-plugin/plugin.json`, `gemini-extension.json`, `package.json` and the top entry of `CHANGELOG.md`, and they must match. Claude Code only offers an update when the manifest version changes, so every release bumps it, by 0.0.1 each time (1.7.0 → 1.7.1). Renaming or removing a skill, subagent or principle is a breaking change, listed first in the release notes.

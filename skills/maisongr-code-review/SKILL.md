@@ -25,6 +25,17 @@ Find the problems in a change that would hurt users, data or the team, explain e
 - Read the diff in full before commenting on any part of it.
 - Read the surrounding code that the diff relies on, not only the changed lines. Many bugs live in the interaction between a change and code it did not touch.
 
+### 1b. Treat the author's report as claims
+
+Writing code is cheap; proving it right is the hard part. When the change comes with a report (an AI agent's summary, a PR checklist, "all tests pass"), each statement in it is a claim to check, not evidence:
+
+- Re-run every check the report says passed (tests, type checker, linter, build) with the project's own commands, and compare the results.
+- Compare what the report says changed with what the diff actually changes. Flag files changed but not mentioned, and behaviour claimed but not in the diff.
+- A test added for a fix or for new behaviour must fail without the change. If you can, revert the change locally and run it. A test that pins existing behaviour before a refactor is expected to pass both ways.
+- Report any claim you could not reproduce as **unverified**, with the command you ran.
+
+For a change that touches security, payments, personal data or production data, ask for a second review in a fresh context, ideally by a model from a different family than the one that wrote the change (for example, review with Codex or Gemini CLI what was written with Claude Code, and the other way round). Models of one family tend to share blind spots. Where the two reviews disagree, verify the point; never settle it by majority.
+
 ### 2. Review in priority order
 
 Work through these passes. Spend your effort at the top.
@@ -81,6 +92,7 @@ Every finding has a location, the problem, a concrete scenario, and a suggested 
 ## Verification
 
 - [ ] The full diff and the code it depends on were read.
+- [ ] Every check the author's report claims was re-run, and the report was compared with the diff.
 - [ ] Every finding has a location and a concrete failure scenario.
 - [ ] Findings were checked against existing guards.
 - [ ] Findings are ranked by severity.

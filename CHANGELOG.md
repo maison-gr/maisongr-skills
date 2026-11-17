@@ -1,10 +1,23 @@
 # Changelog
 
-All notable changes to this project are documented here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+All notable changes to this project are documented here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and each release adds 0.0.1 to the version (1.7.0, 1.7.1, 1.7.2), whatever it contains.
 
-What counts as breaking: renaming or removing a skill, subagent or principle, or changing an installation path. Rewording guidance is a minor or patch change.
+A breaking change (renaming or removing a skill, subagent or principle, or changing an installation path) is called out at the top of its release notes, under **Breaking**.
 
 ## [Unreleased]
+
+## [1.7.1] - 2026-11-17
+
+### Added
+
+- `maisongr-agent-safety`, bringing the total to seventeen skills: running AI coding agents as a managed insider risk. An inventory of what the agent can reach, the least access that does the job (read-only, scoped, no production secrets), containment, a human on every irreversible action, a record the agent cannot edit, independent verification, and what to do first when an agent goes wrong.
+
+### Changed
+
+- `maisongr-architecture` adds AI model dependencies: one interface to the provider, the model and prompt in configuration, a private evaluation set run before any model or prompt change, cost bounds, and defined behaviour when the provider fails.
+- `maisongr-code-review` treats the author's report as claims, not evidence: it re-runs every check the report says passed, compares the report with the diff, checks that an added test fails without the change, and marks what it could not reproduce as unverified. For changes to security, payments, personal data or production data it asks for a second review in a fresh context, ideally by a model from a different family, and settles disagreements by verifying, never by majority.
+- `RESEARCH.md` records industry signals and a quarterly review of every skill, with each skill's last change and next review date.
+- The `maisongr-reviewer` subagent re-runs the checks the author's report claims and compares the report with the diff.
 
 ## [1.7.0] - 2026-11-14
 
