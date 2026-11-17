@@ -1,0 +1,59 @@
+<!doctype html>
+<!--
+  Source of .github/social-preview.png (1280 × 640), GitHub's social preview.
+  Maison GR's faces and tokens: Instrument Sans, Geist Mono, Archivo (MAISON), Alex Brush (GR).
+  To render, screenshot #canvas at 1280 × 640, for example with Playwright:
+    page.setViewportSize({ width: 1280, height: 640 }); page.goto(file); page.locator('#canvas').screenshot({ path })
+  Update the skill count here whenever a skill is added or removed.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&family=Archivo:wdth,wght@62..125,500..600&family=Geist+Mono:wght@500;600&family=Alex+Brush&display=block" rel="stylesheet">
+<style>
+  :root { --bg: #19191a; --ink: #f2f3ef; --faint: #9a9b97; --line: rgba(242, 243, 239, .55); --grid: rgba(242, 243, 239, .06); --signal: #e8664f; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); }
+  #canvas { position: relative; width: 1280px; height: 640px; background: var(--bg); color: var(--ink); overflow: hidden; }
+  .frame { position: absolute; left: 26px; top: 26px; right: 26px; bottom: 26px; border: 1px solid var(--line); }
+  .grid { position: absolute; left: 0; right: 0; top: 51px; bottom: 77px; background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 64px 64px; background-position: -1px -1px; }
+  .mono { font-family: 'Geist Mono', monospace; font-weight: 500; text-transform: uppercase; letter-spacing: .1em; }
+  .top { position: absolute; left: 0; right: 0; top: 0; height: 51px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; padding: 0 25px; font-size: 13px; color: var(--faint); }
+  .logo { position: absolute; left: 53px; top: 101px; display: inline-flex; align-items: baseline; gap: .1em; font-size: 33px; white-space: nowrap; }
+  .logo .maison { font-family: 'Archivo', sans-serif; font-stretch: 125%; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+  .logo .gr { display: inline-flex; align-items: baseline; margin-left: .42em; }
+  .logo .br { font-family: 'Geist Mono', monospace; font-weight: 600; font-size: .66em; }
+  .logo .script { font-family: 'Alex Brush', cursive; font-size: 1.45em; line-height: .6; padding: 0 .04em; }
+  h1 { position: absolute; left: 51px; top: 182px; font-family: 'Instrument Sans', sans-serif; font-weight: 600; font-size: 98px; line-height: 98px; letter-spacing: -0.045em; }
+  .measure { position: absolute; left: 53px; top: 401px; display: flex; align-items: center; gap: 22px; color: var(--signal); }
+  .measure .rule { position: relative; width: 469px; height: 2px; background: var(--signal); }
+  .measure .rule::before, .measure .rule::after { content: ""; position: absolute; top: -7px; width: 1px; height: 15px; background: var(--signal); }
+  .measure .rule::before { left: 0; } .measure .rule::after { right: 0; }
+  .measure .mono { font-size: 13.5px; font-weight: 600; }
+  .band { position: absolute; left: 0; right: 0; bottom: 0; height: 77px; border-top: 1px solid var(--line); display: grid; grid-template-columns: 361px 566px 1fr; }
+  .band > div { padding: 17px 25px 0; }
+  .band > div + div { border-left: 1px solid var(--line); }
+  .band .k { font-size: 11.5px; color: var(--faint); }
+  .band .v { margin-top: 9px; font-size: 15px; font-weight: 600; letter-spacing: .08em; }
+  .band .v.cmd { text-transform: none; letter-spacing: .02em; color: var(--signal); }
+</style>
+</head>
+<body>
+<div id="canvas">
+  <div class="frame">
+    <div class="grid"></div>
+    <div class="top mono"><span>Maison GR — Open source · Sheet 02</span><span>github.com/maison-gr</span></div>
+    <span class="logo"><span class="maison">Maison</span><span class="gr"><span class="br">&lt;</span><span class="script">GR</span><span class="br">/&gt;</span></span></span>
+    <h1>Engineering discipline<br>for AI coding agents.</h1>
+    <div class="measure"><span class="rule"></span><span class="mono">7 principles · 17 skills</span></div>
+    <div class="band mono">
+      <div><p class="k">Discipline</p><p class="v">Understand · Build · Verify</p></div>
+      <div><p class="k">Works with</p><p class="v">Claude Code · Codex · Cursor · Copilot · Gemini</p></div>
+      <div><p class="k">Install</p><p class="v cmd">npx maisongr-skills</p></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
