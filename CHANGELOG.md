@@ -6,6 +6,10 @@ What counts as breaking: renaming or removing a skill, subagent or principle, or
 
 ## [Unreleased]
 
+### Added
+
+- `maisongr-agent-safety`, bringing the total to seventeen skills: running AI coding agents as a managed insider risk. An inventory of what the agent can reach, the least access that does the job (read-only, scoped, no production secrets), containment, a human on every irreversible action, a record the agent cannot edit, independent verification, and what to do first when an agent goes wrong.
+
 ### Changed
 
 - `maisongr-code-review` treats the author's report as claims, not evidence: it re-runs every check the report says passed, compares the report with the diff, checks that an added test fails without the change, and marks what it could not reproduce as unverified.

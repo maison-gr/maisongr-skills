@@ -38,7 +38,7 @@ AI coding agents rarely fail for lack of knowledge. They fail because finishing 
 
 And when your team uses three different agents, you get three different standards, or none.
 
-Maison GR gives every agent the same seven principles and sixteen task methods, from one source file, installed with one command.
+Maison GR gives every agent the same seven principles and seventeen task methods, from one source file, installed with one command.
 
 ## 60 seconds
 
@@ -105,7 +105,7 @@ flowchart LR
     A --> U[Cursor]
     A --> P[Copilot]
     A --> G[Gemini CLI]
-    S["16 skills<br/>loaded on demand"] -.-> C & X & U & P & G
+    S["17 skills<br/>loaded on demand"] -.-> C & X & U & P & G
 ```
 
 - **Principles** are short, always-on instructions in `AGENTS.md`, the file most agents already read. About 6 KB.
@@ -157,6 +157,7 @@ flowchart LR
 | [`maisongr-i18n`](skills/maisongr-i18n/SKILL.md) | Multilingual products: externalised text, real plurals, locale-aware dates and money, layouts that hold |
 | [`maisongr-seo`](skills/maisongr-seo/SKILL.md) | Pages found by people, search engines and AI assistants: one intent per page, canonicals, structured data, sitemaps |
 | [`maisongr-incident`](skills/maisongr-incident/SKILL.md) | A production incident: stabilise first, keep a timeline, confirm recovery, write a blameless post-mortem |
+| [`maisongr-agent-safety`](skills/maisongr-agent-safety/SKILL.md) | Running AI agents as a managed insider risk: least access, a human on irreversible actions, a record they can't edit, independent checks |
 
 Agents pick a skill up when a request matches it. *"Users say the CSV import drops rows"* loads `maisongr-debugging`: reproduce, find the root cause, fix, add a regression test. To call one directly: `/maisongr:maisongr-security-review` in Claude Code, `$maisongr-security-review` in Codex.
 
@@ -205,7 +206,7 @@ To contribute a fix, a skill or a new platform, read [CONTRIBUTING](CONTRIBUTING
 
 ## Credits
 
-Maison GR started from [andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) and its four principles for LLM coding agents. It adds principles for verification, security and irreversible actions, sixteen task skills, subagents, one generated source for five platforms, and an installer. [RESEARCH.md](RESEARCH.md) lists every project and document that informed the design.
+Maison GR started from [andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) and its four principles for LLM coding agents. It adds principles for verification, security and irreversible actions, seventeen task skills, subagents, one generated source for five platforms, and an installer. [RESEARCH.md](RESEARCH.md) lists every project and document that informed the design.
 
 ## Further reading
 
