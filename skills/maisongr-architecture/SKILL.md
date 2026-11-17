@@ -115,7 +115,7 @@ A feature that calls an AI model depends on a provider whose models, prices and 
 
 - **One interface.** One module builds the request and reads the answer. The rest of the application never calls the provider's SDK directly.
 - **Configuration, not code.** The model name, the prompt version, token limits and timeouts live in one place.
-- **A private evaluation set.** 20 to 50 real inputs, each with what a good answer must and must not contain, kept in the repository. Run it before changing the model, the provider or the prompt, and compare the results with the current version.
+- **A private evaluation set.** 20 to 50 real inputs, each with what a good answer must and must not contain, kept in the repository. Remove credentials, tokens and personal data from every input before storing it, or write a synthetic example of the same case instead. Run it before changing the model, the provider or the prompt, and compare the results with the current version.
 - **Cost bounds.** A spending cap per user or per day, and token use logged per feature, so a new model's cost is known before it ships.
 - **Failure behaviour.** What the feature does when the provider is slow, down or refuses: a clear message, a retry, or a degraded mode, never a blank screen.
 
