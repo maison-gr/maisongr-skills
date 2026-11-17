@@ -6,6 +6,10 @@ What counts as breaking: renaming or removing a skill, subagent or principle, or
 
 ## [Unreleased]
 
+### Changed
+
+- `maisongr-code-review` treats the author's report as claims, not evidence: it re-runs every check the report says passed, compares the report with the diff, checks that an added test fails without the change, and marks what it could not reproduce as unverified.
+
 ## [1.7.0] - 2026-11-14
 
 ### Added
