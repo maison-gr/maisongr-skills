@@ -106,6 +106,7 @@ Several other concerns were considered for principle status. Each matters, but m
 | Internationalisation | [i18n skill](../skills/maisongr-i18n/SKILL.md) | Only applies to products in more than one language |
 | Search and AI discoverability | [SEO skill](../skills/maisongr-seo/SKILL.md) | Only applies to public web pages |
 | Incident response | [Incident skill](../skills/maisongr-incident/SKILL.md), principle 7 | Approval for every production action is principle 7; stabilising, the timeline and the post-mortem are needed only when production breaks |
+| Agent access and oversight | [Agent safety skill](../skills/maisongr-agent-safety/SKILL.md), principles 6 and 7 | Least access and approval for irreversible actions are principles 6 and 7; the inventory, the record and independent checks are needed when setting up or reviewing an agent |
 | Context efficiency | This framework's design | Applied by keeping always-on instructions short and moving detail into skills |
 | Observability | Not yet covered | A candidate for a future skill; see [CONTRIBUTING](../CONTRIBUTING.md) |
 
