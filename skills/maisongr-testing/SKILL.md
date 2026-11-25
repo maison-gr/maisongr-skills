@@ -3,7 +3,7 @@ name: maisongr-testing
 description: Maison GR method for writing meaningful automated tests. Use when adding tests for new or changed behaviour, writing a regression test for a bug, practising test-first development, improving weak or flaky tests, or deciding what level (unit, integration, end-to-end) a test belongs at.
 license: MIT
 metadata:
-  author: Maison GR
+  author: Maison GR Inc.
 ---
 
 # Maison GR Testing

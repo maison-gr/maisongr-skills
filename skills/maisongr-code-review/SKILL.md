@@ -3,7 +3,7 @@ name: maisongr-code-review
 description: Maison GR method for reviewing a code change. Use when asked to review a diff, a pull request, a branch or a set of files, or before declaring your own substantial change complete. Finds correctness bugs, security issues, regressions, broken contracts, missing tests and unnecessary complexity, and reports them ranked by severity with concrete failure scenarios.
 license: MIT
 metadata:
-  author: Maison GR
+  author: Maison GR Inc.
 ---
 
 # Maison GR Code Review

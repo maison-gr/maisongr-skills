@@ -3,7 +3,7 @@ name: maisongr-agent-safety
 description: Maison GR method for running AI coding agents as a managed insider risk. Use when setting up an agent on a repository, machine or CI pipeline; when granting an agent tokens, API keys, cloud consoles or tool connectors (MCP); when automating agents to run unattended or on a schedule; when reviewing what an agent did; and after an agent did something unexpected. Gives the agent the least access it needs, keeps a human on every irreversible action, keeps a record the agent cannot edit, and verifies its work independently.
 license: MIT
 metadata:
-  author: Maison GR
+  author: Maison GR Inc.
 ---
 
 # Maison GR Agent Safety

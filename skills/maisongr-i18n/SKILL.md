@@ -3,7 +3,7 @@ name: maisongr-i18n
 description: Maison GR method for building software that works in more than one language and region. Use when adding or changing user-facing text in a multilingual product, adding a language or locale, setting up or reviewing internationalisation (i18n) and localisation (l10n), writing translation messages, handling plurals, formatting dates, numbers or currency, supporting right-to-left languages, or adding locale routing and a language switcher.
 license: MIT
 metadata:
-  author: Maison GR
+  author: Maison GR Inc.
 ---
 
 # Maison GR Internationalisation

@@ -3,7 +3,7 @@ name: maisongr-incident
 description: Maison GR method for handling a production incident and learning from it. Use when a live site, API or service is down, slow or returning errors, when a deploy or migration broke production, when data may have been lost, corrupted or exposed, when asked to mitigate or roll back an outage, and when writing a post-mortem or incident report afterwards.
 license: MIT
 metadata:
-  author: Maison GR
+  author: Maison GR Inc.
 ---
 
 # Maison GR Incident Response

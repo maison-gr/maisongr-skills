@@ -3,7 +3,7 @@ name: maisongr-debugging
 description: Maison GR method for finding and fixing the root cause of a defect. Use when something fails, crashes, returns wrong results, behaves intermittently, or a test is failing, and the cause is not already known. Reproduces the failure, narrows it to a root cause with evidence, applies the smallest fix, and proves the failure is gone with a regression test.
 license: MIT
 metadata:
-  author: Maison GR
+  author: Maison GR Inc.
 ---
 
 # Maison GR Debugging

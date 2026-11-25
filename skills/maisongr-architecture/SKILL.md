@@ -3,7 +3,7 @@ name: maisongr-architecture
 description: Maison GR method for technical design decisions. Use when choosing how to structure a feature, where code should live, whether to add a module, service, library or dependency, how components should communicate, or when a change crosses module boundaries. Also use when asked to write a design document or an architecture decision record.
 license: MIT
 metadata:
-  author: Maison GR
+  author: Maison GR Inc.
 ---
 
 # Maison GR Architecture

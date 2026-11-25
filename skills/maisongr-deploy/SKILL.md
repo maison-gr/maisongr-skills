@@ -3,7 +3,7 @@ name: maisongr-deploy
 description: Maison GR method for shipping changes to production safely. Use when deploying an application, publishing a package or release, running a production migration, changing hosting, infrastructure, DNS or environment configuration, or adding a paid or external service. Confirms approval, records a rollback point, takes a backup before data changes, estimates cost, and checks the live result after every deploy.
 license: MIT
 metadata:
-  author: Maison GR
+  author: Maison GR Inc.
 ---
 
 # Maison GR Deploy

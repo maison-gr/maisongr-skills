@@ -3,7 +3,7 @@ name: maisongr-seo
 description: Maison GR method for making public web pages findable by people, search engines and AI assistants. Use when creating or changing a public page or its metadata, choosing keywords, titles or URLs, working on canonical URLs, redirects, hreflang, robots.txt, sitemaps, structured data (JSON-LD), Open Graph tags or llms.txt, running an SEO audit, or when a page is not indexed, ranks for the wrong query, or is quoted wrongly by an AI assistant.
 license: MIT
 metadata:
-  author: Maison GR
+  author: Maison GR Inc.
 ---
 
 # Maison GR Search and AI Discoverability

@@ -3,7 +3,7 @@ name: maisongr-open-source
 description: Maison GR method for contributing to a repository the developer does not maintain. Use when preparing a fix or feature for an open-source or upstream project, forking and opening a pull request, answering review on someone else's repository, or keeping an open contribution up to date. Reads the project's contribution, CLA or DCO and AI policies before the first commit, keeps each pull request small and proven, and treats every public comment as the developer's own words.
 license: MIT
 metadata:
-  author: Maison GR
+  author: Maison GR Inc.
 ---
 
 # Maison GR Open-Source Contribution

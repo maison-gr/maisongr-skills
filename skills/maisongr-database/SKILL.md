@@ -3,7 +3,7 @@ name: maisongr-database
 description: Maison GR method for safe database work. Use when changing a schema, writing or reviewing a migration, adding or changing queries, indexes or constraints, modelling data, writing data backfills or fixes, or diagnosing slow queries, in SQL databases (PostgreSQL, MySQL, SQLite) or document stores (MongoDB) and through ORMs such as Prisma, Drizzle, SQLAlchemy, ActiveRecord or Mongoose.
 license: MIT
 metadata:
-  author: Maison GR
+  author: Maison GR Inc.
 ---
 
 # Maison GR Database Engineering

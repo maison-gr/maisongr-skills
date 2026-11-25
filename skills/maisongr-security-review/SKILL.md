@@ -3,7 +3,7 @@ name: maisongr-security-review
 description: Maison GR method for reviewing code for security vulnerabilities. Use when asked for a security review or audit, and when a change touches authentication, authorisation, sessions, user input handling, file uploads, payments, personal data, secrets, cryptography, third-party integrations, dependencies, or AI features that process untrusted content, and before an application built quickly with an AI assistant or a starter template goes live.
 license: MIT
 metadata:
-  author: Maison GR
+  author: Maison GR Inc.
 ---
 
 # Maison GR Security Review
