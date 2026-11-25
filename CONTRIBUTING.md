@@ -68,7 +68,7 @@ name: maisongr-<name>
 description: <What it does>. Use when <the situations and requests that should trigger it>.
 license: MIT
 metadata:
-  author: Maison GR
+  author: Maison GR Inc.
 ---
 
 # Maison GR <Title>

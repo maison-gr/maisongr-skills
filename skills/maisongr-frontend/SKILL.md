@@ -3,7 +3,7 @@ name: maisongr-frontend
 description: Maison GR method for building and changing user interfaces to a production standard. Use when creating or modifying web or mobile UI components, pages, forms, navigation, dialogs, styling or design tokens, and when reviewing UI changes for accessibility (WCAG 2.2 AA), responsive behaviour, interaction states, performance (Core Web Vitals) and visual consistency.
 license: MIT
 metadata:
-  author: Maison GR
+  author: Maison GR Inc.
 ---
 
 # Maison GR Frontend Engineering

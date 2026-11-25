@@ -26,7 +26,7 @@
     "url": "git+https://github.com/maison-gr/maisongr-skills.git"
   },
   "license": "MIT",
-  "author": "Maison GR (https://www.maisongr.com)",
+  "author": "Maison GR Inc. (https://www.maisongr.com)",
   "bin": {
     "maisongr-skills": "cli/maisongr-skills.mjs"
   },

@@ -3,7 +3,7 @@ name: maisongr-api
 description: Maison GR method for designing and changing APIs without breaking their consumers. Use when adding or modifying HTTP/REST, GraphQL, RPC or webhook endpoints, request and response shapes, validation, error formats, pagination, authentication requirements, versioning, or an OpenAPI or schema definition, and when reviewing such changes.
 license: MIT
 metadata:
-  author: Maison GR
+  author: Maison GR Inc.
 ---
 
 # Maison GR API Engineering

@@ -3,7 +3,7 @@ name: maisongr-engineering
 description: Maison GR method for carrying a coding task from request to verified result. Use when implementing a feature, fixing a defect, refactoring, or making any change to an existing codebase that is larger than a one-line edit, especially when the request is ambiguous, spans several files, or touches behaviour other code depends on.
 license: MIT
 metadata:
-  author: Maison GR
+  author: Maison GR Inc.
 ---
 
 # Maison GR Engineering

@@ -212,6 +212,15 @@ Maison GR started from [andrej-karpathy-skills](https://github.com/multica-ai/an
 
 [Principles](docs/principles.md) · [Examples](EXAMPLES.md) · [Installation](docs/installation.md) · [Compatibility](docs/compatibility.md) · [FAQ](docs/faq.md) · [Architecture](docs/architecture.md) · [Changelog](CHANGELOG.md)
 
+## More from Maison GR
+
+Open source from [Maison GR](https://www.maisongr.com), a software studio in Québec City:
+
+- [maisongr-sitemap](https://github.com/maison-gr/maisongr-sitemap): one sitemap, two readers. The XML search engines need, and a page in your site's own design for people.
+- [Maison GR Sitemap for WordPress](https://github.com/maison-gr/maisongr-sitemap-wordpress): the same sitemap for WordPress, in your theme's colours and type.
+- [maisongr-typo](https://github.com/maison-gr/maisongr-typo): French typography, the Québec way, with a CI check.
+- [maisongr-law25](https://github.com/maison-gr/maisongr-law25): your Law 25 privacy impact assessment, next to your code, checked in CI.
+
 ## License
 
-[MIT](LICENSE) © Maison GR
+[MIT](LICENSE) © Maison GR Inc.

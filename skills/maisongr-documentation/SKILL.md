@@ -3,7 +3,7 @@ name: maisongr-documentation
 description: Maison GR method for writing technical documentation that stays accurate. Use when writing or updating a README, setup or installation guide, API reference, architecture overview, runbook, changelog entry, migration guide, or code comments, and when a code change makes existing documentation wrong.
 license: MIT
 metadata:
-  author: Maison GR
+  author: Maison GR Inc.
 ---
 
 # Maison GR Documentation

@@ -3,7 +3,7 @@ name: maisongr-git
 description: Maison GR method for everyday version control. Use when creating branches, staging and committing, writing commit messages, resolving merge conflicts, keeping a branch current, tagging a release, or setting up a repository's Git hygiene (.gitignore, .gitattributes). Checks the staged diff for secrets before every commit, keeps commits focused, protects branches that deploy, and handles a leaked secret correctly.
 license: MIT
 metadata:
-  author: Maison GR
+  author: Maison GR Inc.
 ---
 
 # Maison GR Git
