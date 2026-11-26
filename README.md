@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/maison-gr/maisongr-skills/main/.github/social-preview.png" alt="maisongr-skills: seven principles and seventeen skills for AI coding agents" width="720">
+  <img src="https://raw.githubusercontent.com/maison-gr/maisongr-skills/main/.github/hero.jpg" alt="Maison GR open source, 05: maisongr-skills. Agents that ask, then prove it. Next to it, the install (17 skills, 3 subagents, AGENTS.md, CLAUDE.md) and a report caught listing npm test as verified when it never ran." width="720">
 </p>
 
 <h1 align="center">One engineering standard for every AI coding agent</h1>
